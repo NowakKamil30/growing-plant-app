@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Trans } from 'react-i18next';
 
 export const Header = (): JSX.Element => {
   const classes = useStyles();
@@ -19,9 +20,11 @@ export const Header = (): JSX.Element => {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Plant
+            <Trans i18nKey='title'/>
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit'>
+              <Trans i18nKey='action.login' />
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
