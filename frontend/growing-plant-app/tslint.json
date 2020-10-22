@@ -27,7 +27,9 @@
         "no-duplicate-variable": true,
         "label-position": true,
         "no-duplicate-super": true,
-        "member-access": true
+        "member-access": true,
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"]
     },
     "rulesDirectory": []
 }
