@@ -39,7 +39,7 @@ public class UserService implements ExtendCRUDService<User, Long> {
                     user.setRole((Role) updates.get("role"));
                     isEdit = true;
                 }
-                if (updates.get("email") != null) {
+                if (updates.get("isActive") != null) {
                     user.setActive((boolean) updates.get("isActive"));
                     isEdit = true;
                 }
