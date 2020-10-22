@@ -4,7 +4,7 @@ import {
     Route,
     Switch
   } from 'react-router-dom';
-import { HomePage } from '../layouts/HomePage';
+import { HomePage } from '../pages/HomePage';
 export const AppRouter = () => (
     <Router>
         <Switch>
