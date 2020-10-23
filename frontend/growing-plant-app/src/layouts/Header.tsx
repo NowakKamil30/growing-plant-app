@@ -11,7 +11,7 @@ import { Trans } from 'react-i18next';
 import { connect, ConnectedProps } from 'react-redux';
 import { changeMainDrawerVisible } from '../stores/actions/LayoutControlAction';
 import { Dispatch } from 'redux';
-import { LayoutControlTypes } from '../stores/types/LayoutControlTypes';
+import { DrawerControlTypes } from '../stores/types/DrawerControlTypes';
 
 const mapDispatcherToProps = (dispatch: Dispatch) => (
   {
@@ -26,7 +26,7 @@ const connector = connect(null, mapDispatcherToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface HeaderProps extends PropsFromRedux {
-  changeDrawerVisible: (isVisible: boolean) => LayoutControlTypes;
+  changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
 }
 
 const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => {
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => 
           className={menuButton}
           color='inherit'
           aria-label='menu'
-          onClick={(): LayoutControlTypes => changeDrawerVisible(true)}>
+          onClick={(): DrawerControlTypes => changeDrawerVisible(true)}>
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' className={title}>

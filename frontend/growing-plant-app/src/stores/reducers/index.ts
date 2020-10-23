@@ -1,10 +1,11 @@
-  import { combineReducers } from 'redux';
-import { LayoutControlReducer, LayoutControlState } from './LayoutControlReducer';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { combineReducers } from 'redux';
+import { DrawerControlReducer, DrawerControlState } from './DrawerControlReducer';
 
   export default combineReducers({
-    layoutControl: LayoutControlReducer
+    drawerControl: DrawerControlReducer
   });
 
   export interface ReduceTypes {
-    layoutControl: LayoutControlState;
+    drawerControl: DrawerControlState;
   }

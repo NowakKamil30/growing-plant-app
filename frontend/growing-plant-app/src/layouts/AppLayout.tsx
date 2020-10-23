@@ -1,19 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import MainDrawer from '../components/Drawers/MainDrawer';
-import { AppRouter } from '../router/AppRouter';
+import MainDrawer from '../components/drawers/MainDrawer';
+import RouterSwitch from '../router/RouterSwitch';
 import Header from './Header';
 
 export const AppLayout = (): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-        <Header/>
-        <MainDrawer/>
-        <AppRouter/>
-    </div>
+      <div className={classes.root}>
+          <Header/>
+          <MainDrawer/>
+          <RouterSwitch/>
+      </div>
   );
 };
 
