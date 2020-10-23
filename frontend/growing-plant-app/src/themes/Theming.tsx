@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { AppLayout } from '../layouts/AppLayout';
 import { green, purple } from '@material-ui/core/colors';
+import AppRouter from '../router/AppRoutert';
 
 const theme = createMuiTheme({
     palette: {
@@ -9,10 +9,12 @@ const theme = createMuiTheme({
           paper: green[300]
         },
         primary: {
-            main: green[500]
+            main: green[500],
+            contrastText: '#000000'
         },
         secondary: {
-            main: purple[500]
+            main: purple[500],
+            contrastText: '#000000'
         }
     }
 });
@@ -20,7 +22,7 @@ const theme = createMuiTheme({
 export const Theming = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <AppLayout />
+        <AppRouter />
     </ThemeProvider>
   );
 };
