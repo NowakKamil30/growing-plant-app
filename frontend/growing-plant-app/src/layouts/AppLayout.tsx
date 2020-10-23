@@ -20,7 +20,7 @@ export const AppLayout = (): JSX.Element => {
 const useStyles = makeStyles((theme: Theme) =>
 createStyles({
   root: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.paper,
     flex: 1,
     minHeight: '100vh'
   },
