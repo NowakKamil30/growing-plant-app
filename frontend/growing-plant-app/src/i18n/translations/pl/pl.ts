@@ -23,7 +23,8 @@ const pl = {
         },
         action: {
             login: 'zaloguj się',
-            logout: 'wyloguj się'
+            logout: 'wyloguj się',
+            register: 'zarejestruj się'
         }
     }
 };

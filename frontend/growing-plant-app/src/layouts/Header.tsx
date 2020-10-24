@@ -34,7 +34,8 @@ const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => 
     root,
     toolbar,
     menuButton,
-    title
+    title,
+    button
     } = useStyles();
 
   return (
@@ -52,8 +53,14 @@ const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => 
           <Typography variant='h6' className={title}>
             <Trans i18nKey='title'/>
           </Typography>
-          <Button color='inherit'>
+          <Button color='secondary' variant='contained' className={ button }>
               <Trans i18nKey='action.login' />
+          </Button>
+          <Button color='secondary' variant='contained' className={ button }>
+              <Trans i18nKey='action.logout' />
+          </Button>
+          <Button color='secondary' variant='contained' className={ button }>
+              <Trans i18nKey='action.register' />
           </Button>
         </Toolbar>
       </AppBar>
@@ -71,6 +78,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
+    },
+    button: {
+      marginLeft: 3,
+      marginRight: 3,
     },
     title: {
       flexGrow: 1,
