@@ -24,8 +24,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Trans } from 'react-i18next';
 import { createStyles, DrawerProps, IconButton, makeStyles, Theme, Toolbar, Typography } from '@material-ui/core';
-import ListItemWithCollapse from '../ListItemWithCollapse';
-import ListItemLink from '../ListItemLink';
+import ListItemWithCollapse from '../list/ListItemWithCollapse';
+import ListItemLink from '../list/ListItemLink';
 
 const mapDispatcherToProps = (dispatch: Dispatch) => (
     {
