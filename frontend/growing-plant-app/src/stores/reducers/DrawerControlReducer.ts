@@ -4,20 +4,23 @@ import { CHANGE_MAIN_DRAWER_VISIBLE,
     CHANGE_MAIN_DRAWER_POSITION,
     EXPAND_SHOP_LIST,
     EXPAND_MY_DEVICES_LIST,
+    EXPAND_CONTACT_LIST,
     DrawerControlTypes } from '../types/DrawerControlTypes';
 
 export interface DrawerControlState {
     isMainDrawerVisible: boolean;
-    MainDrawerAnchor: DrawerProps['anchor'];
+    mainDrawerAnchor: DrawerProps['anchor'];
     isExpandMyDevicesList: boolean;
     isExpandShopList: boolean;
+    isExpandContactList: boolean;
 }
 
 const INITIAL_STATE: DrawerControlState = {
     isMainDrawerVisible: false,
-    MainDrawerAnchor: 'left',
+    mainDrawerAnchor: 'left',
     isExpandMyDevicesList: false,
     isExpandShopList: false,
+    isExpandContactList: false,
 };
 
 export const DrawerControlReducer = (state: DrawerControlState = INITIAL_STATE, action: DrawerControlTypes)
@@ -29,7 +32,7 @@ export const DrawerControlReducer = (state: DrawerControlState = INITIAL_STATE, 
 
         case CHANGE_MAIN_DRAWER_POSITION: {
 
-            return { ...state, MainDrawerAnchor: action.payload };
+            return { ...state, mainDrawerAnchor: action.payload };
         }
 
         case EXPAND_SHOP_LIST: {
@@ -38,6 +41,10 @@ export const DrawerControlReducer = (state: DrawerControlState = INITIAL_STATE, 
 
         case EXPAND_MY_DEVICES_LIST: {
             return { ...state, isExpandMyDevicesList: action.payload };
+        }
+
+        case EXPAND_CONTACT_LIST: {
+            return { ...state, isExpandContactList: action.payload };
         }
 
         default: {

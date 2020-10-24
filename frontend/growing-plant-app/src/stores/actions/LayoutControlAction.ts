@@ -5,7 +5,8 @@ import {
     CHANGE_MAIN_DRAWER_POSITION,
     EXPAND_MY_DEVICES_LIST,
     EXPAND_SHOP_LIST,
-    DrawerControlTypes
+    DrawerControlTypes,
+    EXPAND_CONTACT_LIST
 } from '../types/DrawerControlTypes';
 
 export const changeMainDrawerVisible = (isVisible: boolean): DrawerControlTypes => ({
@@ -25,5 +26,10 @@ export const expandMyDevicesList = (isVisible: boolean): DrawerControlTypes => (
 
 export const expandShopList = (isVisible: boolean): DrawerControlTypes => ({
     type: EXPAND_SHOP_LIST,
+    payload: isVisible,
+});
+
+export const expandContactList = (isVisible: boolean): DrawerControlTypes => ({
+    type: EXPAND_CONTACT_LIST,
     payload: isVisible,
 });

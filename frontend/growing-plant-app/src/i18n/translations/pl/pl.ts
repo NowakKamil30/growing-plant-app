@@ -2,13 +2,24 @@ const pl = {
     translations: {
         title: 'Plant app',
         pages: {
-            home: 'Strona główna',
-            contact: 'Kontakt',
-            myAccount: 'Moje konto',
-            myDevices: 'Moje urządzenia',
+            home: 'strona główna',
+            contact: 'kontakt',
+            myAccount: 'moje konto',
+            myDevices: 'moje urządzenia',
             shop: 'sklep',
             addDevice: 'dodaj urządzenie',
-            adminPanel: 'panel admina'
+            adminPanel: 'panel admina',
+            about: 'o nas'
+        },
+        shop: {
+            NewReleases: 'nowości',
+            basket: 'koszyk',
+            discounts: 'promocje'
+        },
+        contact: {
+            faq: 'FaQ',
+            helpline: 'infolinia',
+            message: 'wiadomość'
         },
         action: {
             login: 'zaloguj się',

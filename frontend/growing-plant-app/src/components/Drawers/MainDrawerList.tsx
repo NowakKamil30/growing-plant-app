@@ -4,11 +4,11 @@ import { connect, ConnectedProps } from 'react-redux';
 import {
     changeMainDrawerVisible,
     expandMyDevicesList,
-    expandShopList
+    expandShopList,
+    expandContactList
  } from '../../stores/actions/LayoutControlAction';
 import { ReduceTypes } from '../../stores/reducers';
 import { Dispatch } from 'redux';
-import { StarBorder } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import ContactsIcon from '@material-ui/icons/Contacts';
@@ -18,10 +18,16 @@ import StoreIcon from '@material-ui/icons/Store';
 import AddIcon from '@material-ui/icons/Add';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import MessageIcon from '@material-ui/icons/Message';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import { Trans } from 'react-i18next';
 import { createStyles, DrawerProps, IconButton, makeStyles, Theme, Toolbar, Typography } from '@material-ui/core';
 import ListItemWithCollapse from '../list/ListItemWithCollapse';
@@ -37,15 +43,18 @@ const mapDispatcherToProps = (dispatch: Dispatch) => (
         ),
         expandShop: (isExpand: boolean) => (
             dispatch(expandShopList(isExpand))
+        ),
+        expandContact: (isExpand: boolean) => (
+            dispatch(expandContactList(isExpand))
         )
-
     }
 );
 
 const mapStateToProps = (state: ReduceTypes): any =>({
-    anchor: state.drawerControl.MainDrawerAnchor,
+    anchor: state.drawerControl.mainDrawerAnchor,
     isExpandShop: state.drawerControl.isExpandShopList,
     isExpandMyDevices: state.drawerControl.isExpandMyDevicesList,
+    isExpandContact: state.drawerControl.isExpandContactList,
 });
 
 const connector = connect(mapStateToProps, mapDispatcherToProps);
@@ -56,18 +65,22 @@ interface MainDrawerListProps extends PropsFromRedux {
     anchor: DrawerProps['anchor'];
     isExpandShop: boolean;
     isExpandMyDevices: boolean;
+    isExpandContact: boolean;
     changeDrawerVisible: (isVisible: boolean) => void;
     expandMyDevices: (isExpand: boolean) => void;
     expandShop: (isExpand: boolean) => void;
+    expandContact: (isExpand: boolean) => void;
 }
 
 const MainDrawerList: React.FC<MainDrawerListProps> = ({
     anchor,
     isExpandMyDevices,
     isExpandShop,
+    isExpandContact,
     expandMyDevices,
     expandShop,
-    changeDrawerVisible }): JSX.Element => {
+    changeDrawerVisible,
+    expandContact }): JSX.Element => {
     const {
         root,
         nested,
@@ -111,13 +124,12 @@ const MainDrawerList: React.FC<MainDrawerListProps> = ({
                 isExpand={ isExpandMyDevices }
                 onClick={() => expandMyDevices(!isExpandMyDevices) }
                 list={() => (
-                <List component='div' disablePadding>
-                    <ListItem button className={nested}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary='Starred' />
-                    </ListItem>
+                <List component='div' disablePadding className={ nested }>
+                    <ListItemLink
+                        icon={ () => <ImportantDevicesIcon /> }
+                        i18nKeyTitle='blank'
+                        path=''
+                    />
                 </List>
                 )}
             />
@@ -127,19 +139,58 @@ const MainDrawerList: React.FC<MainDrawerListProps> = ({
                 isExpand={ isExpandShop }
                 onClick={() => expandShop( !isExpandShop )}
                 list={() => (
-                <List component='div' disablePadding>
-                    <ListItem button className={nested}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary='Starred' />
-                    </ListItem>
+                <List component='div' disablePadding className={ nested }>
+                    <ListItemLink
+                        icon={ () => <StorefrontIcon /> }
+                        i18nKeyTitle='pages.shop'
+                        path=''
+                    />
+                    <ListItemLink
+                        icon={ () => <NewReleasesIcon /> }
+                        i18nKeyTitle='shop.NewReleases'
+                        path=''
+                    />
+                    <ListItemLink
+                        icon={ () => <ShoppingBasketIcon /> }
+                        i18nKeyTitle='shop.basket'
+                        path=''
+                    />
+                    <ListItemLink
+                        icon={ () => <LocalOfferIcon /> }
+                        i18nKeyTitle='shop.discounts'
+                        path=''
+                    />
+                </List>
+                )}
+            />
+            <ListItemWithCollapse
+                i18nKeyTitle='pages.contact'
+                icon={ () => <ContactsIcon />}
+                isExpand={ isExpandContact }
+                onClick={() => expandContact( !isExpandContact )}
+                list={() => (
+                <List component='div' disablePadding className={ nested }>
+                    <ListItemLink
+                        icon={ () => <LiveHelpIcon /> }
+                        i18nKeyTitle='contact.faq'
+                        path=''
+                    />
+                    <ListItemLink
+                        icon={ () => <PhoneInTalkIcon /> }
+                        i18nKeyTitle='contact.helpline'
+                        path=''
+                    />
+                    <ListItemLink
+                        icon={ () => <MessageIcon /> }
+                        i18nKeyTitle='contact.message'
+                        path=''
+                    />
                 </List>
                 )}
             />
             <ListItemLink
-                icon={ () => <ContactsIcon /> }
-                i18nKeyTitle='pages.contact'
+                icon={ () => <InfoIcon /> }
+                i18nKeyTitle='pages.about'
                 path=''
             />
             <ListItemLink

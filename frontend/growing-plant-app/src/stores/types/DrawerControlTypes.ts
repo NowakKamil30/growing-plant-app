@@ -5,6 +5,7 @@ export const CHANGE_MAIN_DRAWER_VISIBLE = 'DRAWER_CONTROL_CHANGE_MAIN_DRAWER_VIS
 export const CHANGE_MAIN_DRAWER_POSITION = 'DRAWER_CONTROL_CHANGE_MAIN_DRAWER_POSITION';
 export const EXPAND_MY_DEVICES_LIST = 'DRAWER_CONTROL_EXPAND_MY_DEVICES_LIST';
 export const EXPAND_SHOP_LIST = 'DRAWER_CONTROL_EXPAND_SHOP_LIST';
+export const EXPAND_CONTACT_LIST = 'DRAWER_CONTROL_EXPAND_CONTACT_LIST';
 
 interface ChangeMainDrawerVisibleAction {
     type: typeof CHANGE_MAIN_DRAWER_VISIBLE;
@@ -26,7 +27,13 @@ interface ExpandShopListAction {
     payload: boolean;
 }
 
+interface ExpandContactListAction {
+    type: typeof EXPAND_CONTACT_LIST;
+    payload: boolean;
+}
+
 export type DrawerControlTypes = ChangeMainDrawerPositionAction |
                                     ChangeMainDrawerVisibleAction |
                                     ExpandMyDevicesListAction |
-                                    ExpandShopListAction;
+                                    ExpandShopListAction |
+                                    ExpandContactListAction;
