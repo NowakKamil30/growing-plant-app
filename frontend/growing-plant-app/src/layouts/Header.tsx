@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Trans } from 'react-i18next';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeMainDrawerVisible } from '../stores/actions/LayoutControlAction';
+import { changeMainDrawerVisible } from '../stores/actions/DrawerControlActions';
 import { Dispatch } from 'redux';
 import { DrawerControlTypes } from '../stores/types/DrawerControlTypes';
 

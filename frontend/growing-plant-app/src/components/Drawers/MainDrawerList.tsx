@@ -6,7 +6,7 @@ import {
     expandMyDevicesList,
     expandShopList,
     expandContactList
- } from '../../stores/actions/LayoutControlAction';
+ } from '../../stores/actions/DrawerControlActions';
 import { ReduceTypes } from '../../stores/reducers';
 import { Dispatch } from 'redux';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';

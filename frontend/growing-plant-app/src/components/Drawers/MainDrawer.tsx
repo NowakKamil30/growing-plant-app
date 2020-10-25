@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeMainDrawerPosition } from '../../stores/actions/LayoutControlAction';
+import { changeMainDrawerPosition } from '../../stores/actions/DrawerControlActions';
 import { ReduceTypes } from '../../stores/reducers';
 import { Dispatch } from 'redux';
 import { DrawerProps } from '@material-ui/core/Drawer/Drawer';
