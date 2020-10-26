@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
+import DialogManager from '../components/dialogs/DialogManager';
 import RouterSwitch from '../router/RouterSwitch';
 import Header from './Header';
 import Nav from './Nav';
@@ -13,6 +14,7 @@ export const AppLayout = (): JSX.Element => {
           <Header/>
           <Nav/>
           <RouterSwitch/>
+          <DialogManager/>
       </div>
   );
 };

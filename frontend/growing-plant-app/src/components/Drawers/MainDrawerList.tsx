@@ -33,7 +33,15 @@ import { createStyles, DrawerProps, IconButton, makeStyles, Theme, Toolbar, Typo
 import ListItemWithCollapse from '../list/ListItemWithCollapse';
 import ListItemLink from '../list/ListItemLink';
 
-const mapDispatcherToProps = (dispatch: Dispatch) => (
+interface MapDispatcherToProps {
+    changeDrawerVisible: (isVisible: boolean) => void;
+    expandMyDevices: (isVisible: boolean) => void;
+    expandShop: (isVisible: boolean) => void;
+    expandContact: (isVisible: boolean) => void;
+
+}
+
+const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps =>  (
     {
         changeDrawerVisible: (isMainDrawerVisible: boolean) => (
             dispatch(changeMainDrawerVisible(isMainDrawerVisible))
@@ -50,7 +58,14 @@ const mapDispatcherToProps = (dispatch: Dispatch) => (
     }
 );
 
-const mapStateToProps = (state: ReduceTypes): any =>({
+interface  MapStateToProps {
+    anchor: DrawerProps['anchor'];
+    isExpandShop: boolean;
+    isExpandMyDevices: boolean;
+    isExpandContact: boolean;
+}
+
+const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
     anchor: state.drawerControl.mainDrawerAnchor,
     isExpandShop: state.drawerControl.isExpandShopList,
     isExpandMyDevices: state.drawerControl.isExpandMyDevicesList,
@@ -61,18 +76,7 @@ const connector = connect(mapStateToProps, mapDispatcherToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-interface MainDrawerListProps extends PropsFromRedux {
-    anchor: DrawerProps['anchor'];
-    isExpandShop: boolean;
-    isExpandMyDevices: boolean;
-    isExpandContact: boolean;
-    changeDrawerVisible: (isVisible: boolean) => void;
-    expandMyDevices: (isExpand: boolean) => void;
-    expandShop: (isExpand: boolean) => void;
-    expandContact: (isExpand: boolean) => void;
-}
-
-const MainDrawerList: React.FC<MainDrawerListProps> = ({
+const MainDrawerList: React.FC<PropsFromRedux> = ({
     anchor,
     isExpandMyDevices,
     isExpandShop,

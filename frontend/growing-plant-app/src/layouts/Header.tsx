@@ -12,12 +12,26 @@ import { connect, ConnectedProps } from 'react-redux';
 import { changeMainDrawerVisible } from '../stores/actions/DrawerControlActions';
 import { Dispatch } from 'redux';
 import { DrawerControlTypes } from '../stores/types/DrawerControlTypes';
+import { DialogControlTypes } from '../stores/types/DialogControlTypes';
+import { showLoginDialog, showRegisterDialog } from '../stores/actions/DialogControlActions';
 
-const mapDispatcherToProps = (dispatch: Dispatch) => (
+interface MapDispatcherToProps {
+  changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
+  showLoginDialog: (isVisible: boolean) => DialogControlTypes;
+  showRegisterDialog: (isVisible: boolean) => DialogControlTypes;
+}
+
+const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => (
   {
       changeDrawerVisible: (isVisible: boolean) => (
           dispatch(changeMainDrawerVisible(isVisible))
       ),
+      showLoginDialog: (isVisible: boolean) => (
+        dispatch(showLoginDialog(isVisible))
+      ),
+      showRegisterDialog: (isVisible: boolean) => (
+        dispatch(showRegisterDialog(isVisible))
+      )
   }
 );
 
@@ -25,11 +39,11 @@ const connector = connect(null, mapDispatcherToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-interface HeaderProps extends PropsFromRedux {
-  changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
-}
-
-const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => {
+const Header: React.FC<PropsFromRedux> = ({
+  changeDrawerVisible,
+  showLoginDialog,
+  showRegisterDialog
+  }): JSX.Element => {
   const {
     root,
     toolbar,
@@ -53,13 +67,23 @@ const Header: React.FC<HeaderProps> = ({ changeDrawerVisible }): JSX.Element => 
           <Typography variant='h6' className={title}>
             <Trans i18nKey='title'/>
           </Typography>
-          <Button color='secondary' variant='contained' className={ button }>
+          <Button
+          color='secondary'
+          variant='contained'
+          className={ button }
+          onClick={ () => showLoginDialog(true) }
+          >
               <Trans i18nKey='action.login' />
           </Button>
           <Button color='secondary' variant='contained' className={ button }>
               <Trans i18nKey='action.logout' />
           </Button>
-          <Button color='secondary' variant='contained' className={ button }>
+          <Button
+          color='secondary'
+          variant='contained'
+          className={ button }
+          onClick= { () => showRegisterDialog(true) }
+          >
               <Trans i18nKey='action.register' />
           </Button>
         </Toolbar>

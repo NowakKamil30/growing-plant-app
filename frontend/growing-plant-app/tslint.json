@@ -13,7 +13,6 @@
         "no-var-requires": true,
         "typedef": [true, "call-signature", "parameter", "member-variable-declaration"],
         "no-empty": true,
-        "no-shadowed-variable": true,
         "no-unsafe-any": true,
         "no-var-keyword": true,
         "no-duplicate-imports": [true, {"allow-namespace-imports": true}],
