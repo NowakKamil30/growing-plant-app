@@ -5,10 +5,10 @@ import lombok.Builder;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
-@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,16 +21,19 @@ public class User {
     private Role role;
     @NotNull
     private boolean isActive;
+    @OneToMany
+    private List<Device> devices;
 
     public User() {
     }
 
-    public User(Long id, @NotEmpty String email, @NotEmpty String name, Role role, @NotNull boolean isActive) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.role = role;
-        this.isActive = isActive;
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
     }
 
     public Long getId() {
