@@ -1,5 +1,6 @@
 package com.growingplantapp.services;
 
+import com.growingplantapp.builders.UserBuilder;
 import com.growingplantapp.entities.Role;
 import com.growingplantapp.entities.User;
 import com.growingplantapp.repositories.UserRepository;
@@ -38,12 +39,12 @@ class UserServiceTest {
 
     @BeforeAll()
     static void init() {
-        user = User.builder()
-                .name("name")
-                .email("email")
-                .id(1L)
-                .isActive(false)
-                .role(Role.USER)
+        user = UserBuilder.anUser()
+                .withName("name")
+                .withEmail("email")
+                .withId(1L)
+                .withIsActive(false)
+                .withRole(Role.USER)
                 .build();
     }
 
@@ -114,11 +115,11 @@ class UserServiceTest {
 
     @Test
     void update() {
-        User newUser = User.builder()
-                .email("UpdateEmail")
-                .isActive(true)
-                .name("updateName")
-                .role(Role.USER)
+        User newUser = UserBuilder.anUser()
+                .withEmail("UpdateEmail")
+                .withIsActive(true)
+                .withName("updateName")
+                .withRole(Role.USER)
                 .build();
         given(userRepository.save(newUser)).willReturn(newUser);
         userService.update(1L, newUser);
