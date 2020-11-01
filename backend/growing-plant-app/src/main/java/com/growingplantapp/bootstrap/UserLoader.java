@@ -1,5 +1,6 @@
 package com.growingplantapp.bootstrap;
 
+import com.growingplantapp.builders.UserBuilder;
 import com.growingplantapp.entities.Role;
 import com.growingplantapp.entities.User;
 import com.growingplantapp.services.UserService;
@@ -20,11 +21,11 @@ public class UserLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (userService.getAll().size() == 0) {
-            userService.add(User.builder()
-                    .email("ka@com.com")
-                    .isActive(true)
-                    .name("test")
-                    .role(Role.USER)
+            userService.add(UserBuilder.anUser()
+                    .withEmail("ka@com.com")
+                    .withName("test")
+                    .withRole(Role.USER)
+                    .withIsActive(true)
                     .build());
         }
     }
