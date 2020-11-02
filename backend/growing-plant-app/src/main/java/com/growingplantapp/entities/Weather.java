@@ -15,9 +15,19 @@ public class Weather {
     private int insolation;
     @NotNull
     private LocalDateTime localDateTime;
+    @ManyToOne
+    private Device device;
 
 
     public Weather() {
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     public Long getId() {

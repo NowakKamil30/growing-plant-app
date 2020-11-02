@@ -15,9 +15,9 @@ public class Device {
     private User user;
     private double Latitude;
     private double Longitude;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Plant> plant;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Plant> plants;
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Weather> weathers;
     @ManyToOne
     private TypeDevice typeDevice;
@@ -41,12 +41,12 @@ public class Device {
         this.weathers = weathers;
     }
 
-    public List<Plant> getPlant() {
-        return plant;
+    public List<Plant> getPlants() {
+        return plants;
     }
 
-    public void setPlant(List<Plant> plant) {
-        this.plant = plant;
+    public void setPlants(List<Plant> plant) {
+        this.plants = plant;
     }
 
     public Long getId() {

@@ -18,12 +18,21 @@ public class User {
     private Role role;
     @NotNull
     private boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Device> devices;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SupportMessage> supportMessages;
 
     public User() {
     }
 
+    public List<SupportMessage> getSupportMessages() {
+        return supportMessages;
+    }
+
+    public void setSupportMessages(List<SupportMessage> supportMessages) {
+        this.supportMessages = supportMessages;
+    }
 
     public List<Device> getDevices() {
         return devices;
