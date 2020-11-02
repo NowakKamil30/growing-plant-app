@@ -24,7 +24,23 @@ const pl = {
         action: {
             login: 'zaloguj się',
             logout: 'wyloguj się',
-            register: 'zarejestruj się'
+            register: 'zarejestruj się',
+            cancel: 'anuluj'
+        },
+        forms: {
+            login: {
+                title: 'zaloguj się',
+                username: 'nazwa użytkownika',
+                password: 'hasło',
+                save: 'zapamiętaj',
+                forgottenPassword: 'zapomiałeś hasła?'
+            },
+            errors: {
+                wrongLenghtUsername: 'niepoprawna długość nazwy użytkownika(8-20 znaków)',
+                wrongLenghtPassword: 'niepoprawna długość hasła(8-20 znaków)',
+                isRequired: 'jest wymagane',
+                noStartOrEndWithSpace: 'nie może zaczynać się lub kończyć spacją',
+            }
         }
     }
 };
