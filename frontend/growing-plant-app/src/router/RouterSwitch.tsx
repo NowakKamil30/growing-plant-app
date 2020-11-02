@@ -10,18 +10,27 @@ import { HomePage } from '../pages/HomePage';
 import MyAccount from '../pages/MyAccount';
 import MyDevice from '../pages/MyDevice';
 import ContactRouter from './ContactRouter';
+import PrivateRoute from './PrivateRoute';
 import ShopRouter from './ShopRouter';
 const RouterSwitch = () => (
     <Switch>
         <Route exact path='/'>
             <HomePage/>
         </Route>
-        <Route path='/my-account'>
+        <PrivateRoute
+        path='/my-account'
+        isAuth={ false }
+        redirectPath='/'
+        >
             <MyAccount/>
-        </Route>
-        <Route path='/my-device/:id'>
+        </PrivateRoute>
+        <PrivateRoute
+        path='/my-device/:id'
+        isAuth={ false }
+        redirectPath='/'
+        >
             <MyDevice/>
-        </Route>
+        </PrivateRoute>
         <Route path='/contact'>
             <ContactRouter/>
         </Route>
@@ -31,9 +40,13 @@ const RouterSwitch = () => (
         <Route path='/about'>
             <About/>
         </Route>
-        <Route path='/admin-panel'>
+        <PrivateRoute
+        path='/admin-panel'
+        isAuth={ false }
+        redirectPath='/'
+        >
             <AdminPanel/>
-        </Route>
+        </PrivateRoute>
         <Route path='*'>
             <Error404/>
         </Route>
