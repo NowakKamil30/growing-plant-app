@@ -32,13 +32,13 @@ import { Trans } from 'react-i18next';
 import { createStyles, DrawerProps, IconButton, makeStyles, Theme, Toolbar, Typography } from '@material-ui/core';
 import ListItemWithCollapse from '../list/ListItemWithCollapse';
 import ListItemLink from '../list/ListItemLink';
+import { Role } from '../../enums/Role';
 
 interface MapDispatcherToProps {
     changeDrawerVisible: (isVisible: boolean) => void;
     expandMyDevices: (isVisible: boolean) => void;
     expandShop: (isVisible: boolean) => void;
     expandContact: (isVisible: boolean) => void;
-
 }
 
 const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps =>  (
@@ -63,6 +63,7 @@ interface  MapStateToProps {
     isExpandShop: boolean;
     isExpandMyDevices: boolean;
     isExpandContact: boolean;
+    role: Role;
 }
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
@@ -70,6 +71,7 @@ const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
     isExpandShop: state.drawerControl.isExpandShopList,
     isExpandMyDevices: state.drawerControl.isExpandMyDevicesList,
     isExpandContact: state.drawerControl.isExpandContactList,
+    role: state.auth.role,
 });
 
 const connector = connect(mapStateToProps, mapDispatcherToProps);
@@ -81,6 +83,7 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
     isExpandMyDevices,
     isExpandShop,
     isExpandContact,
+    role,
     expandMyDevices,
     expandShop,
     changeDrawerVisible,
@@ -112,31 +115,34 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                 i18nKeyTitle='pages.home'
                 path='/'
             />
-            <ListItemLink
-                icon={ () => <AccountBoxIcon /> }
-                i18nKeyTitle='pages.myAccount'
-                path='/my-account'
-            />
-            <ListItemLink
-                icon={ () => <AddIcon /> }
-                i18nKeyTitle='pages.addDevice'
-                path=''
-            />
-            <ListItemWithCollapse
-                i18nKeyTitle='pages.myDevices'
-                icon={ () => <DevicesIcon />}
-                isExpand={ isExpandMyDevices }
-                onClick={() => expandMyDevices(!isExpandMyDevices) }
-                list={() => (
-                <List component='div' disablePadding className={ nested }>
+            {role === Role.USER || role === Role.ADMIN ? (
+                <>
                     <ListItemLink
-                        icon={ () => <ImportantDevicesIcon /> }
-                        i18nKeyTitle='blank'
+                        icon={ () => <AccountBoxIcon /> }
+                        i18nKeyTitle='pages.myAccount'
+                        path='/my-account'
+                    />
+                    <ListItemLink
+                        icon={ () => <AddIcon /> }
+                        i18nKeyTitle='pages.addDevice'
                         path=''
                     />
-                </List>
+                    <ListItemWithCollapse
+                        i18nKeyTitle='pages.myDevices'
+                        icon={ () => <DevicesIcon />}
+                        isExpand={ isExpandMyDevices }
+                        onClick={() => expandMyDevices(!isExpandMyDevices) }
+                        list={() => (
+                        <List component='div' disablePadding className={ nested }>
+                            <ListItemLink
+                                icon={ () => <ImportantDevicesIcon /> }
+                                i18nKeyTitle='blank'
+                                path=''
+                            />
+                    </List>
                 )}
             />
+                </> ): null}
             <ListItemWithCollapse
                 i18nKeyTitle='pages.shop'
                 icon={ () => <StoreIcon />}
@@ -197,11 +203,14 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                 i18nKeyTitle='pages.about'
                 path='/about'
             />
+            {role === Role.ADMIN ? (
             <ListItemLink
                 icon={ () => <SupervisorAccountIcon /> }
                 i18nKeyTitle='pages.adminPanel'
                 path='/admin-panel'
-            />
+            /> ) : (
+                null
+            )};
         </List>
     );
 };

@@ -15,6 +15,8 @@ import { DrawerControlTypes } from '../stores/types/DrawerControlTypes';
 import { DialogControlTypes } from '../stores/types/DialogControlTypes';
 import { showLoginDialog, showRegisterDialog } from '../stores/actions/DialogControlActions';
 import { Box } from '@material-ui/core';
+import { Role } from '../enums/Role';
+import { ReduceTypes } from '../stores/reducers';
 
 interface MapDispatcherToProps {
   changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
@@ -36,11 +38,20 @@ const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => (
   }
 );
 
-const connector = connect(null, mapDispatcherToProps);
+interface MapStateToProps {
+  role: Role;
+}
+
+const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
+  role: state.auth.role
+});
+
+const connector = connect(mapStateToProps, mapDispatcherToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const Header: React.FC<PropsFromRedux> = ({
+  role,
   changeDrawerVisible,
   showLoginDialog,
   showRegisterDialog
@@ -54,7 +65,7 @@ const Header: React.FC<PropsFromRedux> = ({
     } = useStyles();
 
   return (
-    <Box component='header' className={root}>
+    <Box component='header' className={ root }>
       <AppBar position='static'>
         <Toolbar className={toolbar}>
           <IconButton
@@ -65,28 +76,33 @@ const Header: React.FC<PropsFromRedux> = ({
           onClick={(): DrawerControlTypes => changeDrawerVisible(true)}>
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' className={title}>
+          <Typography variant='h6' className={ title }>
             <Trans i18nKey='title'/>
           </Typography>
-          <Button
-          color='secondary'
-          variant='contained'
-          className={ button }
-          onClick={ () => showLoginDialog(true) }
-          >
-              <Trans i18nKey='action.login' />
-          </Button>
-          <Button color='secondary' variant='contained' className={ button }>
+          { role === Role.USER || role === Role.ADMIN ?  (
+            <Button color='secondary' variant='contained' className={ button }>
               <Trans i18nKey='action.logout' />
-          </Button>
-          <Button
-          color='secondary'
-          variant='contained'
-          className={ button }
-          onClick= { () => showRegisterDialog(true) }
-          >
-              <Trans i18nKey='action.register' />
-          </Button>
+            </Button>
+          ) : (
+              <>
+              <Button
+                color='secondary'
+                variant='contained'
+                className={ button }
+                onClick={ () => showLoginDialog(true) }
+                >
+                  <Trans i18nKey='action.login' />
+                </Button>
+                <Button
+                color='secondary'
+                variant='contained'
+                className={ button }
+                onClick= { () => showRegisterDialog(true) }
+                >
+                  <Trans i18nKey='action.register' />
+                </Button>
+              </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

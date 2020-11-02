@@ -10,7 +10,7 @@ export interface AuthReducerState {
 
 const INITIAL_STATE: AuthReducerState = {
     token: '',
-    role: Role.NO_AUTH,
+    role: Role.USER,
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
