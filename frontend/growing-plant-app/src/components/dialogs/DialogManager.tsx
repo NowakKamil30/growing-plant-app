@@ -1,4 +1,5 @@
 import React from 'react';
+import AddDeviceDialog from './AddDeviceDialog';
 import LoginDialog from './LoginDialog';
 import RegisterDialog from './RegisterDialog';
 
@@ -8,6 +9,7 @@ const DialogManager = (): JSX.Element => {
         <>
             <LoginDialog/>
             <RegisterDialog/>
+            <AddDeviceDialog/>
         </>
     );
 };

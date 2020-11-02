@@ -33,12 +33,15 @@ import { createStyles, DrawerProps, IconButton, makeStyles, Theme, Toolbar, Typo
 import ListItemWithCollapse from '../list/ListItemWithCollapse';
 import ListItemLink from '../list/ListItemLink';
 import { Role } from '../../enums/Role';
+import { showAddDeviceDialog } from '../../stores/actions/DialogControlActions';
+import ListItemButton from '../list/ListItemButton';
 
 interface MapDispatcherToProps {
     changeDrawerVisible: (isVisible: boolean) => void;
     expandMyDevices: (isVisible: boolean) => void;
     expandShop: (isVisible: boolean) => void;
     expandContact: (isVisible: boolean) => void;
+    showAddDeviceDialog: (isVisible: boolean) => void;
 }
 
 const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps =>  (
@@ -54,6 +57,9 @@ const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps =>  (
         ),
         expandContact: (isExpand: boolean) => (
             dispatch(expandContactList(isExpand))
+        ),
+        showAddDeviceDialog: (isExpand: boolean) => (
+            dispatch(showAddDeviceDialog(isExpand))
         )
     }
 );
@@ -63,6 +69,7 @@ interface  MapStateToProps {
     isExpandShop: boolean;
     isExpandMyDevices: boolean;
     isExpandContact: boolean;
+    isAddDeviceDialogVisible: boolean;
     role: Role;
 }
 
@@ -71,6 +78,7 @@ const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
     isExpandShop: state.drawerControl.isExpandShopList,
     isExpandMyDevices: state.drawerControl.isExpandMyDevicesList,
     isExpandContact: state.drawerControl.isExpandContactList,
+    isAddDeviceDialogVisible: state.dialogControl.isAddDeviceDialogVisible,
     role: state.auth.role,
 });
 
@@ -87,7 +95,8 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
     expandMyDevices,
     expandShop,
     changeDrawerVisible,
-    expandContact }): JSX.Element => {
+    expandContact,
+    showAddDeviceDialog }): JSX.Element => {
     const {
         root,
         nested,
@@ -122,10 +131,10 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                         i18nKeyTitle='pages.myAccount'
                         path='/my-account'
                     />
-                    <ListItemLink
+                    <ListItemButton
                         icon={ () => <AddIcon /> }
                         i18nKeyTitle='pages.addDevice'
-                        path=''
+                        onClick={ () => showAddDeviceDialog(true) }
                     />
                     <ListItemWithCollapse
                         i18nKeyTitle='pages.myDevices'

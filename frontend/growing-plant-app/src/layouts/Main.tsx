@@ -11,7 +11,7 @@ const Main = () => {
         component='main'
         className={ root }
         >
-             <RouterSwitch/>
+          <RouterSwitch/>
         </Box>
     );
 };

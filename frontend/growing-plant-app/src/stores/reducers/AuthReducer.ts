@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { Role } from '../../enums/Role';
 import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE } from '../types/AuthTypes';
 
