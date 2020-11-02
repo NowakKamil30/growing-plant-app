@@ -41,7 +41,8 @@ const pl = {
                 isRequired: 'jest wymagane',
                 noStartOrEndWithSpace: 'nie może zaczynać się lub kończyć spacją',
             }
-        }
+        },
+        footer: 'stopka'
     }
 };
 
