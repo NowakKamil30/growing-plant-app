@@ -9,7 +9,8 @@ const pl = {
             shop: 'sklep',
             addDevice: 'dodaj urządzenie',
             adminPanel: 'panel admina',
-            about: 'o nas'
+            about: 'o nas',
+            error404: 'strona nie znalezniona'
         },
         shop: {
             NewReleases: 'nowości',
