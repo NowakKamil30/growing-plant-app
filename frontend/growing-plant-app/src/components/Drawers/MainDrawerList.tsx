@@ -110,12 +110,12 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
             <ListItemLink
                 icon={ () => <HomeIcon /> }
                 i18nKeyTitle='pages.home'
-                path=''
+                path='/'
             />
             <ListItemLink
                 icon={ () => <AccountBoxIcon /> }
                 i18nKeyTitle='pages.myAccount'
-                path=''
+                path='/my-account'
             />
             <ListItemLink
                 icon={ () => <AddIcon /> }
@@ -147,22 +147,22 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                     <ListItemLink
                         icon={ () => <StorefrontIcon /> }
                         i18nKeyTitle='pages.shop'
-                        path=''
+                        path='/shop'
                     />
                     <ListItemLink
                         icon={ () => <NewReleasesIcon /> }
                         i18nKeyTitle='shop.NewReleases'
-                        path=''
+                        path='/shop/new-releases'
                     />
                     <ListItemLink
                         icon={ () => <ShoppingBasketIcon /> }
                         i18nKeyTitle='shop.basket'
-                        path=''
+                        path='/shop/basket'
                     />
                     <ListItemLink
                         icon={ () => <LocalOfferIcon /> }
                         i18nKeyTitle='shop.discounts'
-                        path=''
+                        path='/shop/discounts'
                     />
                 </List>
                 )}
@@ -177,17 +177,17 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                     <ListItemLink
                         icon={ () => <LiveHelpIcon /> }
                         i18nKeyTitle='contact.faq'
-                        path=''
+                        path='/contact/faq'
                     />
                     <ListItemLink
                         icon={ () => <PhoneInTalkIcon /> }
                         i18nKeyTitle='contact.helpline'
-                        path=''
+                        path='/contact/helpline'
                     />
                     <ListItemLink
                         icon={ () => <MessageIcon /> }
                         i18nKeyTitle='contact.message'
-                        path=''
+                        path='/contact/discounts'
                     />
                 </List>
                 )}
@@ -195,12 +195,12 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
             <ListItemLink
                 icon={ () => <InfoIcon /> }
                 i18nKeyTitle='pages.about'
-                path=''
+                path='/about'
             />
             <ListItemLink
                 icon={ () => <SupervisorAccountIcon /> }
                 i18nKeyTitle='pages.adminPanel'
-                path=''
+                path='/admin-panel'
             />
         </List>
     );
