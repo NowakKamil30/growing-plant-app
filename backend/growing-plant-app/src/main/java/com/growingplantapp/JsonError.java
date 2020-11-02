@@ -1,8 +1,5 @@
 package com.growingplantapp;
 
-import lombok.Builder;
-
-@Builder
 public class JsonError {
 
     private String message;
