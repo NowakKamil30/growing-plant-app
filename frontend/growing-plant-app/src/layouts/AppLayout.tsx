@@ -2,8 +2,9 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import DialogManager from '../components/dialogs/DialogManager';
-import RouterSwitch from '../router/RouterSwitch';
+import Footer from './Footer';
 import Header from './Header';
+import Main from './Main';
 import Nav from './Nav';
 
 export const AppLayout = (): JSX.Element => {
@@ -13,7 +14,8 @@ export const AppLayout = (): JSX.Element => {
       <div className={classes.root}>
           <Header/>
           <Nav/>
-          <RouterSwitch/>
+          <Main/>
+          <Footer/>
           <DialogManager/>
       </div>
   );
@@ -22,6 +24,8 @@ export const AppLayout = (): JSX.Element => {
 const useStyles = makeStyles((theme: Theme) =>
 createStyles({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
     flex: 1,
     minHeight: '100vh'

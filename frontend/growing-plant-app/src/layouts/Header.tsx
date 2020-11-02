@@ -14,6 +14,7 @@ import { Dispatch } from 'redux';
 import { DrawerControlTypes } from '../stores/types/DrawerControlTypes';
 import { DialogControlTypes } from '../stores/types/DialogControlTypes';
 import { showLoginDialog, showRegisterDialog } from '../stores/actions/DialogControlActions';
+import { Box } from '@material-ui/core';
 
 interface MapDispatcherToProps {
   changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
@@ -53,7 +54,7 @@ const Header: React.FC<PropsFromRedux> = ({
     } = useStyles();
 
   return (
-    <header className={root}>
+    <Box component='header' className={root}>
       <AppBar position='static'>
         <Toolbar className={toolbar}>
           <IconButton
@@ -88,7 +89,7 @@ const Header: React.FC<PropsFromRedux> = ({
           </Button>
         </Toolbar>
       </AppBar>
-    </header>
+    </Box>
   );
 };
 
