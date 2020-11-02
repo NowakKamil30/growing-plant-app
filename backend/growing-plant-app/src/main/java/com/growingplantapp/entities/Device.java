@@ -1,7 +1,5 @@
 package com.growingplantapp.entities;
 
-import lombok.Builder;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
