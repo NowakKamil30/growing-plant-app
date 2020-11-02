@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Support_messages")
 public class SupportMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

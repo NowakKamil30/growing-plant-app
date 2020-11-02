@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Type_devices")
 public class TypeDevice {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

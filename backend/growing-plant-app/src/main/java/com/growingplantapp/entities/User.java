@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -19,7 +18,7 @@ public class User {
     private Role role;
     @NotNull
     private boolean isActive;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Device> devices;
 
     public User() {

@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Weathers")
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

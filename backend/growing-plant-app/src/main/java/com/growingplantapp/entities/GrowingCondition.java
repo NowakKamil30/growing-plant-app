@@ -5,14 +5,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Growing_conditions")
 public class GrowingCondition {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private int irrigation;
     private int insolation;
-    @Column(name = "time_of_growth")
     private int timeOfGrowth;
     @NotEmpty
     private String color;

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
-@Table(name = "Devices")
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -16,9 +15,9 @@ public class Device {
     private User user;
     private double Latitude;
     private double Longitude;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Plant> plant;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Weather> weathers;
     @ManyToOne
     private TypeDevice typeDevice;

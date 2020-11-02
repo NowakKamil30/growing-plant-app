@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Plants")
 public class Plant {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -14,7 +13,7 @@ public class Plant {
     private String name;
     @ManyToOne
     private Device device;
-    @OneToOne
+    @ManyToOne
     private GrowingCondition growingCondition;
 
     public Plant() {
