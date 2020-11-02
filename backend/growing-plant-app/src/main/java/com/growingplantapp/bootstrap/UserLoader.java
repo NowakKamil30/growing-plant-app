@@ -1,6 +1,9 @@
 package com.growingplantapp.bootstrap;
 
 
+import com.growingplantapp.builders.DeviceBuilder;
+import com.growingplantapp.builders.PlantBuilder;
+import com.growingplantapp.builders.UserBuilder;
 import com.growingplantapp.entities.Device;
 import com.growingplantapp.entities.Plant;
 import com.growingplantapp.entities.Role;
@@ -24,26 +27,26 @@ public class UserLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        if (userService.getAll().size() == 0) {
-//            User user = UserBuilder.anUser()
-//                    .withEmail("ka@com.com")
-//                    .withName("test")
-//                    .withRole(Role.USER)
-//                    .withIsActive(true)
-//                    .build();
-//            Device device = DeviceBuilder.aDevice()
-//                    .withName("name")
-//                    .withUser(user)
-//                    .build();
-//            Plant plant = PlantBuilder
-//                    .aPlant()
-//                    .withName("plant")
-//                    .withDevice(device)
-//                    .build();
-           //device.setPlant(List.of(plant));
-            //user.setDevices(List.of(device));
+        if (userService.getAll().size() == 0) {
+            User user = UserBuilder.anUser()
+                    .withEmail("ka@com.com")
+                    .withName("test")
+                    .withRole(Role.USER)
+                    .withIsActive(true)
+                    .build();
+            Device device = DeviceBuilder.aDevice()
+                    .withName("name")
+                    .withUser(user)
+                    .build();
+            Plant plant = PlantBuilder
+                    .aPlant()
+                    .withName("plant")
+                    .withDevice(device)
+                    .build();
+            device.setPlants(List.of(plant));
+            user.setDevices(List.of(device));
 
-            //userService.add(user);
-       // }
+            userService.add(user);
+        }
     }
 }
