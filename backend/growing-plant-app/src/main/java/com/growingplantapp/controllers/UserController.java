@@ -1,5 +1,6 @@
 package com.growingplantapp.controllers;
 
+import com.growingplantapp.DTOs.UserDTO;
 import com.growingplantapp.entities.User;
 import com.growingplantapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -20,19 +22,22 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
          return userService.getById(id)
+                 .map(UserDTO::new)
                  .map(ResponseEntity::ok)
                  .orElse(ResponseEntity.noContent().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUser() {
+    public ResponseEntity<List<UserDTO>> getAllUser() {
          List<User> userList = userService.getAll();
          if (userList.size() == 0) {
              return ResponseEntity.noContent().build();
          }
-         return ResponseEntity.ok(userList);
+         return ResponseEntity.ok(userList.stream()
+                 .map(UserDTO::new)
+                 .collect(Collectors.toList()));
     }
 
     @PostMapping

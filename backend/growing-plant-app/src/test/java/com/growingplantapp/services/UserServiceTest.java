@@ -1,5 +1,6 @@
 package com.growingplantapp.services;
 
+import com.growingplantapp.builders.UserBuilder;
 import com.growingplantapp.entities.Role;
 import com.growingplantapp.entities.User;
 import com.growingplantapp.repositories.UserRepository;
@@ -38,13 +39,13 @@ class UserServiceTest {
 
     @BeforeAll()
     static void init() {
-//        user = UserBuilder.anUser()
-//                .withName("name")
-//                .withEmail("email")
-//                .withId(1L)
-//                .withIsActive(false)
-//                .withRole(Role.USER)
-//                .build();
+        user = UserBuilder.anUser()
+                .withName("name")
+                .withEmail("email")
+                .withId(1L)
+                .withIsActive(false)
+                .withRole(Role.USER)
+                .build();
     }
 
     @Test()
@@ -114,17 +115,17 @@ class UserServiceTest {
 
     @Test
     void update() {
-//        User newUser = UserBuilder.anUser()
-//                .withEmail("UpdateEmail")
-//                .withIsActive(true)
-//                .withName("updateName")
-//                .withRole(Role.USER)
-//                .build();
-//        given(userRepository.save(newUser)).willReturn(newUser);
-//        userService.update(1L, newUser);
-//
-//        then(userRepository).should().save(newUser);
-//        then(userRepository).shouldHaveNoMoreInteractions();
+        User newUser = UserBuilder.anUser()
+                .withEmail("UpdateEmail")
+                .withIsActive(true)
+                .withName("updateName")
+                .withRole(Role.USER)
+                .build();
+        given(userRepository.save(newUser)).willReturn(newUser);
+        userService.update(1L, newUser);
+
+        then(userRepository).should().save(newUser);
+        then(userRepository).shouldHaveNoMoreInteractions();
     }
 
     @Test
