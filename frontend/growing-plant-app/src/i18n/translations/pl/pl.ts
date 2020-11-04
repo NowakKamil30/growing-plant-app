@@ -25,6 +25,7 @@ const pl = {
         action: {
             login: 'zaloguj się',
             logout: 'wyloguj się',
+            add: 'dodaj',
             register: 'zarejestruj się',
             cancel: 'anuluj'
         },
@@ -35,6 +36,10 @@ const pl = {
                 password: 'hasło',
                 save: 'zapamiętaj',
                 forgottenPassword: 'zapomiałeś hasła?'
+            },
+            addDevice: {
+                title: 'Dodaj urządzenie',
+                text: 'Proszę podać kod aktywacyjny',
             },
             errors: {
                 wrongLenghtUsername: 'niepoprawna długość nazwy użytkownika(8-20 znaków)',
