@@ -11,10 +11,8 @@ public final class UserBuilder {
     private Long id;
     private String email;
     private String name;
-    private Role role;
     private List<Device> devices;
     private List<SupportMessage> supportMessages;
-    private boolean isActive;
 
     private UserBuilder() {
     }
@@ -38,16 +36,6 @@ public final class UserBuilder {
         return this;
     }
 
-    public UserBuilder withRole(Role role) {
-        this.role = role;
-        return this;
-    }
-
-    public UserBuilder withIsActive(boolean isActive) {
-        this.isActive = isActive;
-        return this;
-    }
-
     public UserBuilder withDevices(List<Device> devices) {
         this.devices = devices;
         return this;
@@ -63,8 +51,6 @@ public final class UserBuilder {
         user.setId(id);
         user.setEmail(email);
         user.setName(name);
-        user.setRole(role);
-        user.setActive(true);
         user.setDevices(devices);
         user.setSupportMessages(supportMessages);
         return user;

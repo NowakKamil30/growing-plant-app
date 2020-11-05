@@ -13,6 +13,7 @@ public final class DeviceBuilder {
     private List<Plant> plants;
     private List<Weather> weathers;
     private TypeDevice typeDevice;
+    private boolean isActive;
 
     private DeviceBuilder() {
     }
@@ -28,6 +29,11 @@ public final class DeviceBuilder {
 
     public DeviceBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public DeviceBuilder withIsActive(boolean isActive) {
+        this.isActive = isActive;
         return this;
     }
 
