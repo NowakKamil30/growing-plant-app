@@ -21,8 +21,18 @@ public class Device {
     private List<Weather> weathers;
     @ManyToOne
     private TypeDevice typeDevice;
+    private boolean isActive;
 
     public Device() {
+    }
+
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public TypeDevice getTypeDevice() {

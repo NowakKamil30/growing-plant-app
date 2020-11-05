@@ -14,16 +14,22 @@ public class User {
     private String email;
     @NotEmpty
     private String name;
-    @Enumerated(EnumType.STRING)
-    private Role role;
-    @NotNull
-    private boolean isActive;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Device> devices;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SupportMessage> supportMessages;
+    @OneToOne
+    private LoginUser loginUser;
 
     public User() {
+    }
+
+    public LoginUser getLoginUser() {
+        return loginUser;
+    }
+
+    public void setLoginUser(LoginUser loginUser) {
+        this.loginUser = loginUser;
     }
 
     public List<SupportMessage> getSupportMessages() {
@@ -66,19 +72,5 @@ public class User {
         this.name = name;
     }
 
-    public Role getRole() {
-        return role;
-    }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 }
