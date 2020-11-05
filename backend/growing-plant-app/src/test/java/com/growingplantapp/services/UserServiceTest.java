@@ -43,8 +43,6 @@ class UserServiceTest {
                 .withName("name")
                 .withEmail("email")
                 .withId(1L)
-                .withIsActive(false)
-                .withRole(Role.USER)
                 .build();
     }
 
@@ -117,9 +115,7 @@ class UserServiceTest {
     void update() {
         User newUser = UserBuilder.anUser()
                 .withEmail("UpdateEmail")
-                .withIsActive(true)
                 .withName("updateName")
-                .withRole(Role.USER)
                 .build();
         given(userRepository.save(newUser)).willReturn(newUser);
         userService.update(1L, newUser);
@@ -151,9 +147,7 @@ class UserServiceTest {
 
     static Stream<Arguments> getArgsToPatchChange() {
         return Stream.of(Arguments.of("name", "kkakaka"),
-                Arguments.of("email", "kkkk@22dsd.pl"),
-                Arguments.of("role", Role.ADMIN),
-                Arguments.of("isActive", true));
+                Arguments.of("email", "kkkk@22dsd.pl"));
     }
 
     @ParameterizedTest(name = "{displayName} - [{index}] {arguments}")
