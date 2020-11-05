@@ -1,6 +1,8 @@
 package com.growingplantapp.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.DTOs.UserDTO;
+import com.growingplantapp.DTOs.Views;
 import com.growingplantapp.entities.User;
 import com.growingplantapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.Public.class)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
          return userService.getById(id)
                  .map(UserDTO::new)
@@ -30,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping
+    @JsonView(Views.Public.class)
     public ResponseEntity<List<UserDTO>> getAllUser() {
          List<User> userList = userService.getAll();
          if (userList.size() == 0) {
