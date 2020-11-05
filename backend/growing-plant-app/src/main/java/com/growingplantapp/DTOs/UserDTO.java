@@ -11,10 +11,9 @@ import java.util.stream.Collectors;
 public class UserDTO {
     private Long id;
     private String email;
-    private Role role;
-    private boolean isActive;
     private List<Long> devicesId;
     private List<Long> supportMessagesId;
+    private Long authId;
 
     public UserDTO() {
 
@@ -22,8 +21,6 @@ public class UserDTO {
     public UserDTO(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
-        this.role = user.getRole();
-        this.isActive = user.isActive();
         this.devicesId = user
                 .getDevices()
                 .stream()
@@ -34,6 +31,15 @@ public class UserDTO {
                 .stream()
                 .map(SupportMessage::getId)
                 .collect(Collectors.toList());
+        this.authId = user.getLoginUser().getId();
+    }
+
+    public Long getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(Long authId) {
+        this.authId = authId;
     }
 
     public Long getId() {
@@ -50,22 +56,6 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public List<Long> getDevicesId() {

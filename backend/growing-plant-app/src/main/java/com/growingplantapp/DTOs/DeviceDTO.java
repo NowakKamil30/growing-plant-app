@@ -16,17 +16,14 @@ public class DeviceDTO {
     private List<Long> plantsId;
     private List<Long> weathersId;
     private Long typeDeviceId;
+    private boolean isActive;
 
 
-    public DeviceDTO()
-    {
+    public DeviceDTO() {
 
     }
 
-
-
-    public DeviceDTO(Device device)
-    {
+    public DeviceDTO(Device device) {
         this.id = device.getId();
         this.name = device.getName();
         this.userId = device.getUser().getId();
@@ -41,6 +38,7 @@ public class DeviceDTO {
                 .map(Weather::getId)
                 .collect(Collectors.toList());
         this.typeDeviceId = device.getTypeDevice().getId();
+        this.isActive = device.isActive();
     }
 
 
