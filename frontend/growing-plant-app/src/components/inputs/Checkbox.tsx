@@ -6,7 +6,7 @@ type Color = 'primary' | 'secondary' | 'default';
 interface CheckboxProps {
     color: Color;
     labelI18Key: string;
-    value: boolean;
+    value: boolean | undefined;
     id?: string;
     name?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -35,7 +35,15 @@ const pl = {
                 username: 'nazwa użytkownika',
                 password: 'hasło',
                 save: 'zapamiętaj',
-                forgottenPassword: 'zapomiałeś hasła?'
+                forgottenPassword: 'zapomiałeś hasła?',
+            },
+            register: {
+                title: 'zarejestruj się',
+                confirmPassword: 'powierdz hasło',
+                isAcceptedDocument: 'akceptuje regulamin',
+                email: 'email',
+                lastName: 'nazwisko',
+                firstName: 'imię'
             },
             addDevice: {
                 title: 'Dodaj urządzenie',

@@ -12,7 +12,6 @@ import { Button,
   Theme} from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import Checkbox from '../inputs/Checkbox';
-import { Dispatch } from 'redux';
 import { ReduceTypes } from '../../stores/reducers';
 import Transition from './Transition';
 import { showLoginDialog } from '../../stores/actions/DialogControlActions';
@@ -142,16 +141,16 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
             helperText={ <Trans i18nKey={ errors.username }/> }
             />
             <PasswordInput
-                        id='password'
-                        name='password'
-                        isError={ !!errors.password }
-                        onChange={ handleChange }
-                        onBlur={ handleBlur }
-                        password={ values.password }
-                        i18nKeyTitle='forms.login.password'
-                        i18nKeyErrorText = { errors.password }
-                        color='secondary'
-                        className={ input }
+              id='password'
+              name='password'
+              isError={ !!errors.password }
+              onChange={ handleChange }
+              onBlur={ handleBlur }
+              password={ values.password }
+              i18nKeyTitle='forms.login.password'
+              i18nKeyErrorText = { errors.password }
+              color='secondary'
+              className={ input }
             />
             <Checkbox
             id='isSave'
