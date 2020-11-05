@@ -14,7 +14,9 @@ const signInSend = async (user: LoginUser) => {
 export const  signIn = (user: LoginUser): ThunkAction<void, {}, {}, AnyAction> => (
     async dispatch => {
         const signInData = await signInSend(user);
-
+        localStorage.setItem('token', '111111');
+        localStorage.setItem('role', Role.USER);
+        localStorage.setItem('userId', '1');
         dispatch(signInToReducer({token: 'asdsadsa', role: Role.USER, userId: 1} as SignInResponse));
     }
 );

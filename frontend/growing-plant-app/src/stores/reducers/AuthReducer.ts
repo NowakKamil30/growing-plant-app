@@ -46,7 +46,10 @@ const checkAuthLocalStorage = (state: AuthReducerState) => {
     if ( token && token.length > 0) {
         const role = localStorage.getItem('role');
         if (role && (role === Role.ADMIN || role === Role.USER)) {
-            return { ...state, role, token };
+            const userId: number = Number(localStorage.getItem('userId'));
+            if (userId && userId > 0) {
+                return { ...state, role, token, userId };
+            }
         }
     }
 
