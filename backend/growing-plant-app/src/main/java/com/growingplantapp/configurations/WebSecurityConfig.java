@@ -1,5 +1,6 @@
 package com.growingplantapp.configurations;
 
+import com.growingplantapp.entities.Role;
 import com.growingplantapp.filters.JwtFilter;
 import com.growingplantapp.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/user/**").authenticated();
+                .antMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyRole(Role.ADMIN.toString());
         http.csrf().disable();
     }
 }

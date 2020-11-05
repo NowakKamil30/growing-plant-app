@@ -54,7 +54,16 @@ public class UserLoader implements CommandLineRunner {
             user.setDevices(List.of(device));
             loginUser.setUser(user);
             user.setLoginUser(loginUser);
+            LoginUser loginUser1 = new LoginUser();
+            loginUser.setRole(Role.USER);
+            loginUser.setPassword("user");
+            loginUser.setUsername("user");
+            loginUser.setUser(UserBuilder.anUser()
+            .withEmail("user@o2.pl")
+            .withName("user")
+            .build());
             loginUserService.add(loginUser);
+            loginUserService.add(loginUser1);
         }
     }
 }
