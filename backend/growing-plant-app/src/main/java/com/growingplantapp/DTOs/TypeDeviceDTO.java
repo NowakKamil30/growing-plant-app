@@ -1,5 +1,6 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.Device;
 import com.growingplantapp.entities.TypeDevice;
 
@@ -8,9 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeDeviceDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private String name;
+    @JsonView(Views.Public.class)
     private BigDecimal price;
+    @JsonView(Views.Private.class)
     private List<Long> devicesId;
 
     public TypeDeviceDTO()

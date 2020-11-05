@@ -1,5 +1,6 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.Device;
 import com.growingplantapp.entities.Plant;
 import com.growingplantapp.entities.Weather;
@@ -8,14 +9,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeviceDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private String name;
+    @JsonView(Views.Private.class)
     private Long userId;
+    @JsonView(Views.Public.class)
     private double Latitute;
+    @JsonView(Views.Public.class)
     private double Longitude;
+    @JsonView(Views.Private.class)
     private List<Long> plantsId;
+    @JsonView(Views.Private.class)
     private List<Long> weathersId;
+    @JsonView(Views.Private.class)
     private Long typeDeviceId;
+    @JsonView(Views.Public.class)
     private boolean isActive;
 
 

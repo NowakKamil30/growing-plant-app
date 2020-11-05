@@ -1,15 +1,22 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.Weather;
 
 import java.time.LocalDateTime;
 
 public class WeatherDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private int temperature;
+    @JsonView(Views.Public.class)
     private int rain;
+    @JsonView(Views.Public.class)
     private int insolation;
+    @JsonView(Views.Public.class)
     private LocalDateTime localDateTime;
+    @JsonView(Views.Private.class)
     private Long deviceId;
 
     public WeatherDTO() {

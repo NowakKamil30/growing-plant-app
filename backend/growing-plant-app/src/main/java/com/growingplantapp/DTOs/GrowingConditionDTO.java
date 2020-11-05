@@ -1,12 +1,18 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.GrowingCondition;
 
 public class GrowingConditionDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private int irrigation;
+    @JsonView(Views.Public.class)
     private int insolation;
+    @JsonView(Views.Public.class)
     private int timeOfGrowth;
+    @JsonView(Views.Public.class)
     private String color;
 
     public GrowingConditionDTO()

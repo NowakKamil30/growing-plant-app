@@ -1,11 +1,16 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.Plant;
 
 public class PlantDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private String name;
+    @JsonView(Views.Private.class)
     private Long deviceId;
+    @JsonView(Views.Private.class)
     private Long growingConditionId;
 
     public PlantDTO() {

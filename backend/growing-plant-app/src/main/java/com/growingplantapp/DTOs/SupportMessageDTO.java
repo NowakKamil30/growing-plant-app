@@ -1,10 +1,14 @@
 package com.growingplantapp.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.SupportMessage;
 
 public class SupportMessageDTO {
+    @JsonView(Views.Public.class)
     private Long id;
+    @JsonView(Views.Public.class)
     private String message;
+    @JsonView(Views.Private.class)
     private Long userId;
 
     public SupportMessageDTO()
