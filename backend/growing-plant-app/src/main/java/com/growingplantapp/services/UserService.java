@@ -35,14 +35,6 @@ public class UserService implements ExtendCRUDService<User, Long> {
                     user.setName((String) updates.get("name"));
                     isEdit = true;
                 }
-                if (updates.get("role") != null) {
-                    user.setRole((Role) updates.get("role"));
-                    isEdit = true;
-                }
-                if (updates.get("isActive") != null) {
-                    user.setActive((boolean) updates.get("isActive"));
-                    isEdit = true;
-                }
                 if (isEdit) {
                     userRepository.save(user);
                 }
