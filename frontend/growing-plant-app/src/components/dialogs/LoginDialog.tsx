@@ -23,19 +23,25 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoginUser } from '../../interfaces/LoginUser';
 import PasswordInput from '../inputs/PasswordInput';
+import { signIn } from '../../stores/api/AuthOperations';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface MapDispatcherToProps {
   showLoginDialog: (isVisible: boolean) => DialogControlTypes;
+  login: (loginUser: LoginUser) => void;
 }
 
 interface  MapStateToProps {
   isShowLoginDialog: boolean;
 }
 
-const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => ({
+const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatcherToProps => ({
     showLoginDialog: (isDialogVisible: boolean) => (
       dispatch(showLoginDialog(isDialogVisible))
     ),
+    login: async (loginUser: LoginUser) => (
+      await dispatch(signIn(loginUser))
+    )
 });
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
@@ -49,6 +55,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const LoginDialog: React.FC<PropsFromRedux> = ({
   isShowLoginDialog,
+  login,
   showLoginDialog,
 }): JSX.Element => {
   const { form, input } = useStyles();
@@ -64,6 +71,7 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
     isValid,
     touched,
     isSubmitting,
+    dirty,
     handleBlur,
     handleChange,
     handleSubmit,
@@ -91,8 +99,9 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
               .default(false),
     }),
     onSubmit: (values: LoginUser) => {
-      console.log(values);
+      login(values);
       resetForm();
+      showLoginDialog(false);
      }
   });
 
@@ -161,7 +170,7 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
           <DialogActions>
             <Button
             type='submit'
-            disabled = { !isValid && touched !== {} }
+            disabled = { !isValid || touched === {} || !dirty }
             color='secondary'>
               <Trans i18nKey='action.login' />
             </Button>

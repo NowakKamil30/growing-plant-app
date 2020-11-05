@@ -17,11 +17,14 @@ import { showLoginDialog, showRegisterDialog } from '../stores/actions/DialogCon
 import { Box } from '@material-ui/core';
 import { Role } from '../enums/Role';
 import { ReduceTypes } from '../stores/reducers';
+import { AuthTypes } from '../stores/types/AuthTypes';
+import { signOut } from '../stores/actions/AuthActions';
 
 interface MapDispatcherToProps {
   changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
   showLoginDialog: (isVisible: boolean) => DialogControlTypes;
   showRegisterDialog: (isVisible: boolean) => DialogControlTypes;
+  signOut: () => AuthTypes;
 }
 
 const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => (
@@ -34,6 +37,9 @@ const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => (
       ),
       showRegisterDialog: (isVisible: boolean) => (
         dispatch(showRegisterDialog(isVisible))
+      ),
+      signOut: () => (
+        dispatch(signOut())
       )
   }
 );
@@ -54,7 +60,8 @@ const Header: React.FC<PropsFromRedux> = ({
   role,
   changeDrawerVisible,
   showLoginDialog,
-  showRegisterDialog
+  showRegisterDialog,
+  signOut
   }): JSX.Element => {
   const {
     root,
@@ -80,7 +87,12 @@ const Header: React.FC<PropsFromRedux> = ({
             <Trans i18nKey='title'/>
           </Typography>
           { role === Role.USER || role === Role.ADMIN ?  (
-            <Button color='secondary' variant='contained' className={ button }>
+            <Button
+            color='secondary'
+            variant='contained'
+            className={ button }
+            onClick={ signOut }
+            >
               <Trans i18nKey='action.logout' />
             </Button>
           ) : (

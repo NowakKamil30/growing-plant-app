@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Role } from '../../enums/Role';
-import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE } from '../types/AuthTypes';
+import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE, SIGN_IN, SIGN_OUT } from '../types/AuthTypes';
 
 export interface AuthReducerState {
     token: string;
     role: Role;
+    userId: number;
 }
 
 const INITIAL_STATE: AuthReducerState = {
     token: '',
-    role: Role.USER,
+    userId: -1,
+    role: Role.NO_AUTH,
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -18,6 +20,19 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
 
         case CHECK_AUTH_LOCAL_STORAGE: {
             return checkAuthLocalStorage(state);
+        }
+
+        case SIGN_IN: {
+            const { token, userId, role } = action.payload;
+            console.log(token, userId, role);
+
+            return { ...state, token, role, userId };
+        }
+
+        case SIGN_OUT: {
+            removeLoginDataFromLocalStorage();
+
+            return INITIAL_STATE;
         }
 
         default: {
@@ -36,4 +51,10 @@ const checkAuthLocalStorage = (state: AuthReducerState) => {
     }
 
     return state;
+};
+
+const removeLoginDataFromLocalStorage = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
 };
