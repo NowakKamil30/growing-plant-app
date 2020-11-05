@@ -19,6 +19,7 @@ import { Role } from '../enums/Role';
 import { ReduceTypes } from '../stores/reducers';
 import { AuthTypes } from '../stores/types/AuthTypes';
 import { signOut } from '../stores/actions/AuthActions';
+import { useHistory } from 'react-router-dom';
 
 interface MapDispatcherToProps {
   changeDrawerVisible: (isVisible: boolean) => DrawerControlTypes;
@@ -71,6 +72,8 @@ const Header: React.FC<PropsFromRedux> = ({
     button
     } = useStyles();
 
+    const history = useHistory();
+
   return (
     <Box component='header' className={ root }>
       <AppBar position='static'>
@@ -91,7 +94,10 @@ const Header: React.FC<PropsFromRedux> = ({
             color='secondary'
             variant='contained'
             className={ button }
-            onClick={ signOut }
+            onClick={ () => {
+              signOut();
+              history.push('/');
+            }}
             >
               <Trans i18nKey='action.logout' />
             </Button>
