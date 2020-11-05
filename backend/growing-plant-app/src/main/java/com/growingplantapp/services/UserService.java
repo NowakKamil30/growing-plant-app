@@ -31,8 +31,12 @@ public class UserService implements ExtendCRUDService<User, Long> {
                     user.setEmail((String) updates.get("email"));
                     isEdit = true;
                 }
-                if (updates.get("name") != null) {
-                    user.setName((String) updates.get("name"));
+                if (updates.get("firstName") != null) {
+                    user.setFirstName((String) updates.get("firstName"));
+                    isEdit = true;
+                }
+                if (updates.get("lastName") != null) {
+                    user.setLastName((String) updates.get("lastName"));
                     isEdit = true;
                 }
                 if (isEdit) {

@@ -3,6 +3,8 @@ package com.growingplantapp.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,11 @@ public class User {
     @NotEmpty
     private String email;
     @NotEmpty
-    private String name;
+    private String firstName;
+    @NotEmpty
+    private String lastName;
+    @NotNull
+    private LocalDateTime activeAccountData;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Device> devices;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -64,13 +70,27 @@ public class User {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public LocalDateTime getActiveAccountData() {
+        return activeAccountData;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setActiveAccountData(LocalDateTime activeAccountData) {
+        this.activeAccountData = activeAccountData;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,6 +85,9 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
 
     @Override
     public void add(LoginUser loginUser) {
+        if (loginUser.getUser() != null) {
+            loginUser.getUser().setActiveAccountData(LocalDateTime.now());
+        }
         loginUserRepository.save(loginUser);
     }
 

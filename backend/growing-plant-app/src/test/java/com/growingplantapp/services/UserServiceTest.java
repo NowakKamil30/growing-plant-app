@@ -40,7 +40,7 @@ class UserServiceTest {
     @BeforeAll()
     static void init() {
         user = UserBuilder.anUser()
-                .withName("name")
+                .withFirstName("name")
                 .withEmail("email")
                 .withId(1L)
                 .build();
@@ -115,7 +115,7 @@ class UserServiceTest {
     void update() {
         User newUser = UserBuilder.anUser()
                 .withEmail("UpdateEmail")
-                .withName("updateName")
+                .withFirstName("updateName")
                 .build();
         given(userRepository.save(newUser)).willReturn(newUser);
         userService.update(1L, newUser);

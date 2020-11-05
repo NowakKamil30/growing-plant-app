@@ -2,10 +2,10 @@ package com.growingplantapp.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.growingplantapp.entities.Device;
-import com.growingplantapp.entities.Role;
 import com.growingplantapp.entities.SupportMessage;
 import com.growingplantapp.entities.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +14,12 @@ public class UserDTO {
     private Long id;
     @JsonView(Views.Public.class)
     private String email;
+    @JsonView(Views.Public.class)
+    private String firstName;
+    @JsonView(Views.Public.class)
+    private String lastName;
+    @JsonView(Views.Private.class)
+    private LocalDateTime activeAccountData;
     @JsonView(Views.Public.class)
     private List<Long> devicesId;
     @JsonView(Views.Private.class)
@@ -38,6 +44,33 @@ public class UserDTO {
                 .map(SupportMessage::getId)
                 .collect(Collectors.toList());
         this.authId = user.getLoginUser().getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.activeAccountData = user.getActiveAccountData();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDateTime getActiveAccountData() {
+        return activeAccountData;
+    }
+
+    public void setActiveAccountData(LocalDateTime activeAccountData) {
+        this.activeAccountData = activeAccountData;
     }
 
     public Long getAuthId() {

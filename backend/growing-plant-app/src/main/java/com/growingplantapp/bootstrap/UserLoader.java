@@ -39,7 +39,8 @@ public class UserLoader implements CommandLineRunner {
             loginUser.setRole(Role.ADMIN);
             User user = UserBuilder.anUser()
                     .withEmail("ka@com.com")
-                    .withName("test")
+                    .withFirstName("test")
+                    .withLastName("test surname")
                     .build();
             Device device = DeviceBuilder.aDevice()
                     .withName("name")
@@ -55,13 +56,16 @@ public class UserLoader implements CommandLineRunner {
             loginUser.setUser(user);
             user.setLoginUser(loginUser);
             LoginUser loginUser1 = new LoginUser();
-            loginUser.setRole(Role.USER);
-            loginUser.setPassword("user");
-            loginUser.setUsername("user");
-            loginUser.setUser(UserBuilder.anUser()
-            .withEmail("user@o2.pl")
-            .withName("user")
-            .build());
+            loginUser1.setRole(Role.USER);
+            loginUser1.setUsername("user");
+            loginUser1.setPassword(passwordEncoder.encode("user"));
+            User user1 = UserBuilder.anUser()
+                    .withEmail("user@o2.pl")
+                    .withFirstName("user")
+                    .withLastName("last")
+                    .build();
+            loginUser1.setUser(user1);
+            user1.setLoginUser(loginUser1);
             loginUserService.add(loginUser);
             loginUserService.add(loginUser1);
         }
