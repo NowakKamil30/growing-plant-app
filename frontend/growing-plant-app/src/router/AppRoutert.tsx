@@ -2,7 +2,7 @@ import React from 'react';
 import {
     BrowserRouter as Router,
   } from 'react-router-dom';
-import { AppLayout } from '../layouts/AppLayout';
+import AppLayout from '../layouts/AppLayout';
 const AppRouter = () => (
     <Router>
         <AppLayout/>

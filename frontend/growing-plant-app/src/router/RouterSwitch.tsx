@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import {
+    Redirect,
     Route,
     Switch
   } from 'react-router-dom';
@@ -39,14 +40,14 @@ const RouterSwitch: React.FC<PropsFromRedux> = ({
         <PrivateRoute
         path='/my-account'
         isAuth={ role === Role.ADMIN || role === Role.USER }
-        redirectPath='/'
+        redirectPath='/not-found'
         >
             <MyAccount/>
         </PrivateRoute>
         <PrivateRoute
         path='/my-device/:id'
         isAuth={ role === Role.ADMIN || role === Role.USER }
-        redirectPath='/'
+        redirectPath='/not-found'
         >
             <MyDevice/>
         </PrivateRoute>
@@ -62,12 +63,17 @@ const RouterSwitch: React.FC<PropsFromRedux> = ({
         <PrivateRoute
         path='/admin-panel'
         isAuth={ role === Role.ADMIN }
-        redirectPath='/'
+        redirectPath='/not-found'
         >
             <AdminPanel/>
         </PrivateRoute>
-        <Route path='*'>
+        <Route path='/not-found'>
             <Error404/>
+        </Route>
+        <Route path='*'>
+           <Redirect to={{
+                    pathname: '/not-found'
+                }} />
         </Route>
     </Switch>
 );
