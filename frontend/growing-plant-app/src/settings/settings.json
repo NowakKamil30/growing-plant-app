@@ -4,6 +4,10 @@
             "size": {
                 "width": 700
             }
+        },
+        "url": {
+            "basicUrl": "http://localhost:8080/api/v1",
+            "auth": "/auth"
         }
     }
  }
