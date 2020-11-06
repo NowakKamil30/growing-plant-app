@@ -24,7 +24,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String authorization = httpServletRequest.getHeader("Authorization");
 
         if (authorization != null) {
-            SecurityContextHolder.getContext().setAuthentication(getAuthenticationToken(authorization));
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(authorization);
+            if (authenticationToken != null) {
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            } else {
+                httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "The token is no valid");
+                return;
+            }
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -36,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             verify = jwtVerifier.verify(authorization.substring(7));
         } catch (Exception e) {
-            throw new BadJwtException("bad token");
+            return null;
         }
         String name = verify.getClaim("name").asString();
         String role = verify.getClaim("role").asString();
