@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Role } from '../../enums/Role';
-import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE, SIGN_IN, SIGN_OUT } from '../types/AuthTypes';
+import { ErrorFromServer } from '../../interfaces/ErrorFromServer';
+import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE, SIGN_IN, SIGN_IN_ERROR, SIGN_IN_FETCHING, SIGN_OUT } from '../types/AuthTypes';
 
 export interface AuthReducerState {
     token: string;
     role: Role;
     userId: number;
+    signInError: ErrorFromServer;
+    isSignInFetching: boolean;
 }
 
 const INITIAL_STATE: AuthReducerState = {
     token: '',
     userId: -1,
     role: Role.NO_AUTH,
+    signInError: { message: '' },
+    isSignInFetching: false,
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -27,6 +32,14 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
             console.log(token, userId, role);
 
             return { ...state, token, role, userId };
+        }
+
+        case SIGN_IN_FETCHING: {
+            return { ...state, isSignInFetching: action.payload };
+        }
+
+        case SIGN_IN_ERROR: {
+            return { ...state, signInError: action.payload };
         }
 
         case SIGN_OUT: {
