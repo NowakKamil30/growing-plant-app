@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -32,6 +37,8 @@ public class AuthController {
             sign = JWT.create()
                     .withClaim("name", loginUser.getUsername())
                     .withClaim("role", "ROLE_" + loginUser.getRole().toString())
+                    .withClaim("validDate", LocalDateTime.now().plusDays(1).toEpochSecond(ZoneOffset.UTC))
+                    .withClaim("createDate", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                     .sign(Algorithm.HMAC512("McQfTjWnZr4u7x!A%D*G-KaNdRgUkXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z$C&F"));
         } else {
             return ResponseEntity.noContent().build();

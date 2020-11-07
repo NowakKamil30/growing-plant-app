@@ -14,8 +14,13 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
+import java.util.Date;
 
 public class JwtFilter extends OncePerRequestFilter {
     @Override
@@ -46,6 +51,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         String name = verify.getClaim("name").asString();
         String role = verify.getClaim("role").asString();
+        long validDate = verify.getClaim("validDate").asLong();
+        long createDate = verify.getClaim("createDate").asLong();
+
+        if (validDate < LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) {
+            return null;
+        }
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(name, null, Collections.singleton(simpleGrantedAuthority));
         return token;
