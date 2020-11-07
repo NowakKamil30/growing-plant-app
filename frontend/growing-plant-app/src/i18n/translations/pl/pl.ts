@@ -56,6 +56,9 @@ const pl = {
                 noStartOrEndWithSpace: 'nie może zaczynać się lub kończyć spacją',
             }
         },
+        errors: {
+            loginDefault: 'nie udało się zalogować spróbuj jeszcze raz'
+        },
         footer: 'stopka'
     }
 };

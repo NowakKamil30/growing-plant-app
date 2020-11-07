@@ -9,7 +9,7 @@ import { Button,
   Link,
   makeStyles,
   TextField,
-  Theme} from '@material-ui/core';
+  Theme } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import Checkbox from '../inputs/Checkbox';
 import { ReduceTypes } from '../../stores/reducers';
@@ -24,14 +24,22 @@ import { LoginUser } from '../../interfaces/LoginUser';
 import PasswordInput from '../inputs/PasswordInput';
 import { signIn } from '../../stores/api/AuthOperations';
 import { ThunkDispatch } from 'redux-thunk';
+import ApiHandlerButton from '../buttons/ApiHandlerButton';
+import { ErrorFromServer } from '../../interfaces/ErrorFromServer';
+import { AuthTypes } from '../../stores/types/AuthTypes';
+import { signInError } from '../../stores/actions/AuthActions';
+import Snackbar from '../snackbar/Snackbar';
 
 interface MapDispatcherToProps {
   showLoginDialog: (isVisible: boolean) => DialogControlTypes;
   login: (loginUser: LoginUser) => void;
+  changeSignInError: (error: ErrorFromServer) => AuthTypes;
 }
 
 interface  MapStateToProps {
   isShowLoginDialog: boolean;
+  isSignInFetching: boolean;
+  signInError: ErrorFromServer;
 }
 
 const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatcherToProps => ({
@@ -40,11 +48,16 @@ const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatch
     ),
     login: async (loginUser: LoginUser) => (
       await dispatch(signIn(loginUser))
+    ),
+    changeSignInError: (error: ErrorFromServer) => (
+      dispatch(signInError(error))
     )
 });
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
   isShowLoginDialog: state.dialogControl.isLoginDialogVisible,
+  isSignInFetching: state.auth.isSignInFetching,
+  signInError: state.auth.signInError,
 });
 
 
@@ -54,8 +67,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const LoginDialog: React.FC<PropsFromRedux> = ({
   isShowLoginDialog,
+  isSignInFetching,
+  signInError,
   login,
   showLoginDialog,
+  changeSignInError
 }): JSX.Element => {
   const { form, input } = useStyles();
   const initialValues: LoginUser = {
@@ -69,7 +85,6 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
     errors,
     isValid,
     touched,
-    isSubmitting,
     dirty,
     handleBlur,
     handleChange,
@@ -100,7 +115,6 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
     onSubmit: (values: LoginUser) => {
       login(values);
       resetForm();
-      showLoginDialog(false);
      }
   });
 
@@ -167,12 +181,13 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
             </Link>
           </NavLink>
           <DialogActions>
-            <Button
-            type='submit'
-            disabled = { !isValid || touched === {} || !dirty }
-            color='secondary'>
-              <Trans i18nKey='action.login' />
-            </Button>
+          <ApiHandlerButton
+                type='submit'
+                disabled = { !isValid || touched === {} || !dirty }
+                color='secondary'
+                i18nKey='action.login'
+                isFetching={ isSignInFetching }
+            />
             <Button
             onClick={ closeDialog }
             color='secondary'>
@@ -181,6 +196,13 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
           </DialogActions>
         </form>
       </DialogContent>
+      <Snackbar
+      open={ signInError.isShow }
+      autoHideDuration={ 9000 }
+      onClose={ () => changeSignInError({message: '', isShow: false}) }
+      severity='error'
+      i18nKeyTitle={ signInError.message }
+      />
     </Dialog>
     );
 };

@@ -15,7 +15,7 @@ const INITIAL_STATE: AuthReducerState = {
     token: '',
     userId: -1,
     role: Role.NO_AUTH,
-    signInError: { message: '' },
+    signInError: { message: '', isShow: false },
     isSignInFetching: false,
 };
 
