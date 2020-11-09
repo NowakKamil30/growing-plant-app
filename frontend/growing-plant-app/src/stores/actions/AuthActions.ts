@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ErrorFromServer } from '../../interfaces/ErrorFromServer';
+import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import { LoginResponse } from '../../interfaces/LoginResponse';
 import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE, SIGN_IN, SIGN_IN_ERROR, SIGN_IN_FETCHING, SIGN_OUT } from '../types/AuthTypes';
 
@@ -17,9 +17,9 @@ export const signInFetching = (isFetching: boolean): AuthTypes => ({
     payload: isFetching
 });
 
-export const signInError = (error: ErrorFromServer): AuthTypes => ({
+export const signInMessage = (info: SnackbarInfo): AuthTypes => ({
     type: SIGN_IN_ERROR,
-    payload: error
+    payload: info
 });
 
 export const signOut = (): AuthTypes => ({

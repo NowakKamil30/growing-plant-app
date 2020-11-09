@@ -59,6 +59,9 @@ const pl = {
         errors: {
             loginDefault: 'nie udało się zalogować spróbuj jeszcze raz'
         },
+        successes: {
+            loginDefault: 'witamy!'
+        },
         footer: 'stopka'
     }
 };

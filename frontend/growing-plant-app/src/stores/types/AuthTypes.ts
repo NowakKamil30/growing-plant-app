@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ErrorFromServer } from '../../interfaces/ErrorFromServer';
+import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import { LoginResponse } from '../../interfaces/LoginResponse';
 export const CHECK_AUTH_LOCAL_STORAGE = 'AUTH_CHECK_AUTH_LOCAL_STORAGE';
 export const SIGN_IN = 'AUTH_SIGN_IN';
@@ -24,7 +24,7 @@ interface SignInFetchingAction {
 
 interface SignInErrorAction {
     type: typeof SIGN_IN_ERROR;
-    payload: ErrorFromServer;
+    payload: SnackbarInfo;
 }
 
 interface SignOutAction {

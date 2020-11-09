@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { LoginUser } from '../../interfaces/LoginUser';
-import { signInError, signInFetching, signInToReducer } from '../actions/AuthActions';
+import { signInFetching, signInMessage, signInToReducer } from '../actions/AuthActions';
 import { settings } from '../../settings/settings.json';
 import { LoginUserToServer } from '../../interfaces/LoginUserToServer';
 import { LoginResponse } from '../../interfaces/LoginResponse';
@@ -21,7 +21,11 @@ const signInSend = async (user: LoginUser): Promise<LoginResponse> => {
     return response.data as LoginResponse;
 };
 
-export const  signIn = (user: LoginUser): ThunkAction<void, {}, {}, AnyAction> => (
+export const  signIn = (
+    user: LoginUser,
+    successAction?: () => void,
+    errorAction?: () => void
+    ): ThunkAction<void, {}, {}, AnyAction> => (
     async dispatch => {
         dispatch(signInFetching(true));
         try {
@@ -30,9 +34,20 @@ export const  signIn = (user: LoginUser): ThunkAction<void, {}, {}, AnyAction> =
             localStorage.setItem('role', loginResponse.role);
             localStorage.setItem('userId', loginResponse.userId+'');
             dispatch(signInToReducer(loginResponse));
+            dispatch(signInMessage({
+                i18nKeyTitle: 'successes.loginDefault',
+                isShow: true,
+                severity: 'success'
+            }));
+           successAction && successAction();
         } catch (e) {
             console.log((e as Error).message);
-            dispatch(signInError({ message: 'errors.loginDefault', isShow: true }));
+            dispatch(signInMessage({
+                i18nKeyTitle: 'errors.loginDefault',
+                isShow: true,
+                severity: 'error'
+            }));
+            errorAction && errorAction();
         } finally {
             dispatch(signInFetching(false));
         }

@@ -16,7 +16,7 @@ import { ReduceTypes } from '../../stores/reducers';
 import Transition from './Transition';
 import { showLoginDialog } from '../../stores/actions/DialogControlActions';
 import { Trans } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { DialogControlTypes } from '../../stores/types/DialogControlTypes';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -25,39 +25,51 @@ import PasswordInput from '../inputs/PasswordInput';
 import { signIn } from '../../stores/api/AuthOperations';
 import { ThunkDispatch } from 'redux-thunk';
 import ApiHandlerButton from '../buttons/ApiHandlerButton';
-import { ErrorFromServer } from '../../interfaces/ErrorFromServer';
+import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import { AuthTypes } from '../../stores/types/AuthTypes';
-import { signInError } from '../../stores/actions/AuthActions';
+import { signInMessage } from '../../stores/actions/AuthActions';
 import Snackbar from '../snackbar/Snackbar';
 
 interface MapDispatcherToProps {
   showLoginDialog: (isVisible: boolean) => DialogControlTypes;
-  login: (loginUser: LoginUser) => void;
-  changeSignInError: (error: ErrorFromServer) => AuthTypes;
+  login: (
+    loginUser: LoginUser,
+    successAction?: () => void,
+    errorAction?: () => void
+    ) => void;
+  changeSignInError: (error: SnackbarInfo) => AuthTypes;
 }
 
 interface  MapStateToProps {
   isShowLoginDialog: boolean;
   isSignInFetching: boolean;
-  signInError: ErrorFromServer;
+  signInMessage: SnackbarInfo;
 }
 
 const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatcherToProps => ({
     showLoginDialog: (isDialogVisible: boolean) => (
       dispatch(showLoginDialog(isDialogVisible))
     ),
-    login: async (loginUser: LoginUser) => (
-      await dispatch(signIn(loginUser))
+    login: async (
+      loginUser: LoginUser,
+      successAction?: () => void,
+      errorAction?: () => void
+      ) => (
+      await dispatch(signIn(
+        loginUser,
+        successAction,
+        errorAction
+        ))
     ),
-    changeSignInError: (error: ErrorFromServer) => (
-      dispatch(signInError(error))
+    changeSignInError: (error: SnackbarInfo) => (
+      dispatch(signInMessage(error))
     )
 });
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
   isShowLoginDialog: state.dialogControl.isLoginDialogVisible,
   isSignInFetching: state.auth.isSignInFetching,
-  signInError: state.auth.signInError,
+  signInMessage: state.auth.signInMessage,
 });
 
 
@@ -68,12 +80,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const LoginDialog: React.FC<PropsFromRedux> = ({
   isShowLoginDialog,
   isSignInFetching,
-  signInError,
+  signInMessage,
   login,
   showLoginDialog,
   changeSignInError
 }): JSX.Element => {
   const { form, input } = useStyles();
+  const history = useHistory();
   const initialValues: LoginUser = {
     username: '',
     password: '',
@@ -113,8 +126,11 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
               .default(false),
     }),
     onSubmit: (values: LoginUser) => {
-      login(values);
-      resetForm();
+      login(values, () => {
+        resetForm();
+        history.push('/my-account');
+        showLoginDialog(false);
+      });
      }
   });
 
@@ -197,11 +213,11 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
         </form>
       </DialogContent>
       <Snackbar
-      open={ signInError.isShow }
+      open={ signInMessage.isShow }
       autoHideDuration={ 9000 }
-      onClose={ () => changeSignInError({message: '', isShow: false}) }
-      severity='error'
-      i18nKeyTitle={ signInError.message }
+      onClose={ () => changeSignInError({ ...signInMessage, isShow: false }) }
+      severity={ signInMessage.severity }
+      i18nKeyTitle={ signInMessage.i18nKeyTitle }
       />
     </Dialog>
     );
