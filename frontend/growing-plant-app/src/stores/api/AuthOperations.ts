@@ -34,12 +34,7 @@ export const  signIn = (
             localStorage.setItem('role', loginResponse.role);
             localStorage.setItem('userId', loginResponse.userId+'');
             dispatch(signInToReducer(loginResponse));
-            dispatch(signInMessage({
-                i18nKeyTitle: 'successes.loginDefault',
-                isShow: true,
-                severity: 'success'
-            }));
-           successAction && successAction();
+            successAction && successAction();
         } catch (e) {
             console.log((e as Error).message);
             dispatch(signInMessage({
