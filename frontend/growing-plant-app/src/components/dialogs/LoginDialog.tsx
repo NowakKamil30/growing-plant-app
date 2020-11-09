@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button,
   createStyles,
   Dialog,
@@ -87,6 +87,7 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
 }): JSX.Element => {
   const { form, input } = useStyles();
   const history = useHistory();
+
   const initialValues: LoginUser = {
     username: '',
     password: '',
@@ -133,6 +134,18 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
       });
      }
   });
+
+  useEffect(
+    () => {
+      if (isShowLoginDialog) {
+        const usernameFromLocalStorage = localStorage.getItem('username');
+        if (usernameFromLocalStorage && usernameFromLocalStorage.length > 0) {
+          setValues({ ...values, username: usernameFromLocalStorage });
+        }
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isShowLoginDialog]
+  );
 
   const closeDialog = (): void => {
     showLoginDialog(false);
