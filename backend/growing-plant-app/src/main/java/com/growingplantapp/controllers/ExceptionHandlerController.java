@@ -4,6 +4,7 @@ package com.growingplantapp.controllers;
 import com.growingplantapp.JsonError;
 import com.growingplantapp.builders.JsonErrorBuilder;
 import com.growingplantapp.exceptions.BadJwtException;
+import com.growingplantapp.exceptions.BadUsernameException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,19 +18,15 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(value = NumberFormatException.class)
-    public ResponseEntity<List<JsonError>> numberFormatHandler(NumberFormatException numberFormatException) {
-        List<JsonError> jsonErrorList = List.of(JsonErrorBuilder.aJsonError()
-                .withMessage(numberFormatException.getMessage())
-                .build());
-        return ResponseEntity.badRequest().body(jsonErrorList);
-    }
-
-    @ExceptionHandler(value = { BadJwtException.class })
-    public ResponseEntity<List<JsonError>> badJwtHandler(BadJwtException badJwtException) {
+    @ExceptionHandler(value = {
+            BadJwtException.class,
+            BadUsernameException.class,
+            NumberFormatException.class})
+    public ResponseEntity<List<JsonError>> badDateHandler(BadJwtException badJwtException) {
         List<JsonError> jsonErrorList = List.of(JsonErrorBuilder.aJsonError()
                 .withMessage(badJwtException.getMessage())
                 .build());
         return new ResponseEntity<>(jsonErrorList, HttpStatus.FORBIDDEN);
     }
+
 }

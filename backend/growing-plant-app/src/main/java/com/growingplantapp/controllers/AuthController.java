@@ -3,6 +3,8 @@ package com.growingplantapp.controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.growingplantapp.entities.LoginUser;
+import com.growingplantapp.exceptions.BadJwtException;
+import com.growingplantapp.exceptions.BadUsernameException;
 import com.growingplantapp.models.LoginResponse;
 import com.growingplantapp.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,13 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<LoginResponse> login(@RequestBody LoginUser user) {
         String sign = null;
-        LoginUser loginUser = loginUserService.loadUserByUsername(user.getUsername());
+        LoginUser loginUser;
+        try {
+            loginUser = loginUserService.loadUserByUsername(user.getUsername());
+        } catch (BadUsernameException e) {
+            throw new BadJwtException(e.getMessage());
+        }
+
         if (loginUser != null && BCrypt.checkpw(user.getPassword(), loginUser.getPassword())) {
             sign = JWT.create()
                     .withClaim("name", loginUser.getUsername())

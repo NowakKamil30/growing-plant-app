@@ -2,6 +2,7 @@ package com.growingplantapp.services;
 
 import com.growingplantapp.entities.LoginUser;
 import com.growingplantapp.entities.Role;
+import com.growingplantapp.exceptions.BadUsernameException;
 import com.growingplantapp.repositories.LoginUserRepository;
 import com.growingplantapp.services.interfaces.ExtendCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     public LoginUser loadUserByUsername(String username) {
         LoginUser loginUser = loginUserRepository.findByUsername(username);
         if (loginUser ==  null) {
-            throw new RuntimeException(username);
+            throw new BadUsernameException(username);
         }
         return loginUser;
     }
