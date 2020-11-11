@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -52,9 +50,9 @@ public class AuthController {
             return ResponseEntity.noContent().build();
         }
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(sign);
         loginResponse.setRole(loginUser.getRole());
-        loginResponse.setUserId(loginUser.getUser().getId());
+        loginResponse.setToken(sign);
+        loginResponse.setUserId(loginUser.getId());
         return ResponseEntity.ok(loginResponse);
     }
 }
