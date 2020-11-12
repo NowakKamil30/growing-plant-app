@@ -24,10 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.loginUserService = loginUserService;
     }
 
-    @Bean
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

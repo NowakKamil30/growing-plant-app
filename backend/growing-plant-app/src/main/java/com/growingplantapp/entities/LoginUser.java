@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -15,10 +16,11 @@ public class LoginUser implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private boolean isEnable = true;
+    private boolean isEnable = false;
     @Enumerated(value = EnumType.STRING)
     private Role role = Role.USER;
     @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
     private User user;
 
     public LoginUser() {

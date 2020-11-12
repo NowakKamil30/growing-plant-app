@@ -1,21 +1,16 @@
 package com.growingplantapp.services;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.growingplantapp.entities.LoginUser;
 import com.growingplantapp.entities.Role;
-import com.growingplantapp.exceptions.BadJwtException;
 import com.growingplantapp.exceptions.BadUsernameException;
-import com.growingplantapp.models.LoginResponse;
 import com.growingplantapp.repositories.LoginUserRepository;
 import com.growingplantapp.services.interfaces.ExtendCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,10 +18,12 @@ import java.util.Optional;
 @Service
 public class LoginUserService implements UserDetailsService, ExtendCRUDService<LoginUser, Long> {
     private final LoginUserRepository loginUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginUserService(LoginUserRepository loginUserRepository) {
+    public LoginUserService(LoginUserRepository loginUserRepository, PasswordEncoder passwordEncoder) {
         this.loginUserRepository = loginUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginUser loadUserByUsername(String username) {
@@ -45,10 +42,7 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     }
 
     public boolean isExistAccountSoft(String username) {
-        if (loginUserRepository.findByUsername(username) !=null ) {
-          return false;
-        }
-        return true;
+        return loginUserRepository.findByUsername(username) != null;
     }
 
     @Override
@@ -95,6 +89,7 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
         if (loginUser.getUser() != null) {
             loginUser.getUser().setActiveAccountData(LocalDateTime.now());
         }
+        loginUser.setPassword(passwordEncoder.encode(loginUser.getPassword()));
         loginUserRepository.save(loginUser);
     }
 
@@ -107,5 +102,9 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     public void update(Long aLong, LoginUser loginUser) {
         loginUser.setId(aLong);
         loginUserRepository.save(loginUser);
+    }
+
+    public LoginUser findByUsername(String username) {
+        return loginUserRepository.findByUsername(username);
     }
 }

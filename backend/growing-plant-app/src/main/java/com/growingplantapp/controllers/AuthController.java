@@ -2,9 +2,12 @@ package com.growingplantapp.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.growingplantapp.aspects.EmailAspect;
+import com.growingplantapp.aspects.SendActivityAccountEmail;
 import com.growingplantapp.entities.LoginUser;
 import com.growingplantapp.exceptions.BadJwtException;
 import com.growingplantapp.exceptions.BadUsernameException;
+import com.growingplantapp.exceptions.UserExistException;
 import com.growingplantapp.models.LoginResponse;
 import com.growingplantapp.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +57,16 @@ public class AuthController {
         loginResponse.setToken(sign);
         loginResponse.setUserId(loginUser.getId());
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/register")
+    @SendActivityAccountEmail
+    public ResponseEntity<Void> register(@RequestBody LoginUser loginUser) {
+        if (!loginUserService.isExistAccountSoft(loginUser.getUsername())) {
+            loginUser.getUser().setLoginUser(loginUser);
+            loginUserService.add(loginUser);
+            return ResponseEntity.ok().build();
+        }
+        throw new UserExistException();
     }
 }

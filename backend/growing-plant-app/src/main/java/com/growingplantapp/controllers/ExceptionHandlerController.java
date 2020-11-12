@@ -5,6 +5,8 @@ import com.growingplantapp.JsonError;
 import com.growingplantapp.builders.JsonErrorBuilder;
 import com.growingplantapp.exceptions.BadJwtException;
 import com.growingplantapp.exceptions.BadUsernameException;
+import com.growingplantapp.exceptions.EmailSendException;
+import com.growingplantapp.exceptions.UserExistException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -21,10 +23,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(value = {
             BadJwtException.class,
             BadUsernameException.class,
-            NumberFormatException.class})
-    public ResponseEntity<List<JsonError>> badDateHandler(BadJwtException badJwtException) {
+            NumberFormatException.class,
+            EmailSendException.class,
+            UserExistException.class})
+    public ResponseEntity<List<JsonError>> badDateHandler(Exception exception) {
         List<JsonError> jsonErrorList = List.of(JsonErrorBuilder.aJsonError()
-                .withMessage(badJwtException.getMessage())
+                .withMessage(exception.getMessage())
                 .build());
         return new ResponseEntity<>(jsonErrorList, HttpStatus.FORBIDDEN);
     }
