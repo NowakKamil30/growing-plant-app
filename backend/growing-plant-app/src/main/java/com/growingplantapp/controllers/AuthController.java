@@ -2,12 +2,10 @@ package com.growingplantapp.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.growingplantapp.aspects.EmailAspect;
 import com.growingplantapp.aspects.SendActivityAccountEmail;
+import com.growingplantapp.aspects.SendResetPasswordEmail;
 import com.growingplantapp.entities.LoginUser;
-import com.growingplantapp.exceptions.BadJwtException;
-import com.growingplantapp.exceptions.BadUsernameException;
-import com.growingplantapp.exceptions.UserExistException;
+import com.growingplantapp.exceptions.*;
 import com.growingplantapp.models.LoginResponse;
 import com.growingplantapp.services.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +68,36 @@ public class AuthController {
 
     @GetMapping("/verify-token")
     public ResponseEntity<Map<String, Boolean>> verifyAccount(@RequestParam String token) {
-        loginUserService.verifyAccount(token);
+        try {
+            loginUserService.verifyAccount(token);
+        } catch (LoginUserDontExistException | VerificationTokenDontExistException e) {
+            throw new BadTokenException("", "isActive");
+        }
         return ResponseEntity.ok(Map.of("isActive", true));
+    }
+
+    @PostMapping("/change-password")
+    @SendResetPasswordEmail
+    public ResponseEntity<Map<String, Boolean>> sendChangePasswordToken(@RequestBody Map<String, String> args) {
+        if (args.get("email") != null) {
+            if (loginUserService.findByEmail(args.get("email")) != null) {
+                return ResponseEntity.ok(Map.of("isSendEmail", true));
+            }
+        }
+      throw new BadBodyException("email", "isSendEmail");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Map<String, Boolean>> changePassword(@RequestParam String token,
+                                                               @RequestBody Map<String, String> args) {
+        if (args.get("password") != null) {
+            try {
+                loginUserService.changePassword(token, args.get("password"));
+            } catch (LoginUserDontExistException | VerificationTokenDontExistException loginUserDontExistException) {
+                throw new BadTokenException("", "isChange");
+            }
+            return ResponseEntity.ok(Map.of("isChange", true));
+        }
+        throw new BadBodyException("password", "isChange");
     }
 }
