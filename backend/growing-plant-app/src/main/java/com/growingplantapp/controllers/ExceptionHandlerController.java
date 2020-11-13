@@ -3,10 +3,7 @@ package com.growingplantapp.controllers;
 
 import com.growingplantapp.JsonError;
 import com.growingplantapp.builders.JsonErrorBuilder;
-import com.growingplantapp.exceptions.BadJwtException;
-import com.growingplantapp.exceptions.BadUsernameException;
-import com.growingplantapp.exceptions.EmailSendException;
-import com.growingplantapp.exceptions.UserExistException;
+import com.growingplantapp.exceptions.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
+import java.util.Map;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -31,6 +29,15 @@ public class ExceptionHandlerController {
                 .withMessage(exception.getMessage())
                 .build());
         return new ResponseEntity<>(jsonErrorList, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = {
+            BadTokenException.class,
+            BadBodyException.class,
+    })
+    public ResponseEntity<Map<String, Boolean>> responseMapWithFalseValue(ExceptionMapWithFalseValue exception) {
+        return ResponseEntity.badRequest()
+                .body(Map.of(exception.getMapArgName(), false));
     }
 
 }
