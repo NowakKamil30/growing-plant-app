@@ -2,7 +2,10 @@ package com.growingplantapp.services;
 
 import com.growingplantapp.entities.LoginUser;
 import com.growingplantapp.entities.Role;
+import com.growingplantapp.entities.VerificationToken;
 import com.growingplantapp.exceptions.BadUsernameException;
+import com.growingplantapp.exceptions.LoginUserDontExistException;
+import com.growingplantapp.exceptions.VerificationTokenDontExistException;
 import com.growingplantapp.repositories.LoginUserRepository;
 import com.growingplantapp.services.interfaces.ExtendCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,9 +115,35 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     }
 
     @Transactional
-    public void verifyAccount(String token) {
-        LoginUser loginUser = verificationTokenService.findByToken(token).getLoginUser();
+    public void verifyAccount(String token) throws LoginUserDontExistException, VerificationTokenDontExistException {
+        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+        if (verificationToken == null) {
+            throw new VerificationTokenDontExistException();
+        }
+        LoginUser loginUser = verificationToken.getLoginUser();
+        if (loginUser == null) {
+            throw new LoginUserDontExistException();
+        }
         loginUser.setEnable(true);
+        loginUserRepository.save(loginUser);
+        verificationTokenService.deleteByToken(token);
+    }
+
+    public LoginUser findByEmail(String email) {
+        return loginUserRepository.findByUser_Email(email);
+    }
+
+    @Transactional
+    public void changePassword(String token, String password) throws LoginUserDontExistException, VerificationTokenDontExistException {
+        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+        if (verificationToken == null) {
+            throw new VerificationTokenDontExistException();
+        }
+        LoginUser loginUser = verificationToken.getLoginUser();
+        if (loginUser == null) {
+            throw new LoginUserDontExistException();
+        }
+        loginUser.setPassword(passwordEncoder.encode(password));
         loginUserRepository.save(loginUser);
         verificationTokenService.deleteByToken(token);
     }

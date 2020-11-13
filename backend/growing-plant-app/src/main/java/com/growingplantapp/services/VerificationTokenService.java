@@ -9,6 +9,7 @@ import com.growingplantapp.services.interfaces.ExtendCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -72,5 +73,10 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
 
     public void deleteByToken(String token) {
         verificationTokenRepository.deleteByToken(token);
+    }
+
+    @Transactional
+    public void deleteByLoginUserId(Long id) {
+        verificationTokenRepository.deleteByLoginUser_Id(id);
     }
 }
