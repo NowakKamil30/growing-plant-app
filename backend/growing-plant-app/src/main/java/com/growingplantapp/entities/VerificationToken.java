@@ -1,6 +1,7 @@
 package com.growingplantapp.entities;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -11,8 +12,17 @@ public class VerificationToken {
     private String token;
     @OneToOne
     private LoginUser loginUser;
+    private LocalDateTime createTime = LocalDateTime.now();
 
     public VerificationToken() {
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
     public Long getId() {
