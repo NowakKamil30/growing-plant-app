@@ -130,6 +130,7 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
         }
 
         if (verificationToken.getCreateTime().plusHours(1).isBefore(LocalDateTime.now())) {
+            verificationTokenService.deleteByToken(token);
             throw new VerificationTokenIsTooOldException();
         }
         loginUser.setEnable(true);
@@ -154,6 +155,7 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
             throw new LoginUserDontExistException();
         }
         if (verificationToken.getCreateTime().plusHours(1).isBefore(LocalDateTime.now())) {
+            verificationTokenService.deleteByToken(token);
             throw new VerificationTokenIsTooOldException();
         }
         loginUser.setPassword(passwordEncoder.encode(password));
