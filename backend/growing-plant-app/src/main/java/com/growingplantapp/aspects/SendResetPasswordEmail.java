@@ -1,2 +1,4 @@
-package com.growingplantapp.aspects;public @interface SendResetPasswordEmail {
+package com.growingplantapp.aspects;
+
+public @interface SendResetPasswordEmail {
 }
