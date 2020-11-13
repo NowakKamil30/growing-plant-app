@@ -6,6 +6,7 @@ import com.growingplantapp.entities.VerificationToken;
 import com.growingplantapp.exceptions.BadUsernameException;
 import com.growingplantapp.exceptions.LoginUserDontExistException;
 import com.growingplantapp.exceptions.VerificationTokenDontExistException;
+import com.growingplantapp.exceptions.VerificationTokenIsTooOldException;
 import com.growingplantapp.repositories.LoginUserRepository;
 import com.growingplantapp.services.interfaces.ExtendCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,14 +116,21 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     }
 
     @Transactional
-    public void verifyAccount(String token) throws LoginUserDontExistException, VerificationTokenDontExistException {
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+    public void verifyAccount(String token) throws LoginUserDontExistException,
+            VerificationTokenDontExistException,
+            VerificationTokenIsTooOldException {
+            VerificationToken verificationToken = verificationTokenService.findByToken(token);
         if (verificationToken == null) {
             throw new VerificationTokenDontExistException();
         }
+
         LoginUser loginUser = verificationToken.getLoginUser();
         if (loginUser == null) {
             throw new LoginUserDontExistException();
+        }
+
+        if (verificationToken.getCreateTime().plusHours(1).isBefore(LocalDateTime.now())) {
+            throw new VerificationTokenIsTooOldException();
         }
         loginUser.setEnable(true);
         loginUserRepository.save(loginUser);
@@ -134,7 +142,9 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
     }
 
     @Transactional
-    public void changePassword(String token, String password) throws LoginUserDontExistException, VerificationTokenDontExistException {
+    public void changePassword(String token, String password) throws LoginUserDontExistException,
+            VerificationTokenDontExistException,
+            VerificationTokenIsTooOldException {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         if (verificationToken == null) {
             throw new VerificationTokenDontExistException();
@@ -142,6 +152,9 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
         LoginUser loginUser = verificationToken.getLoginUser();
         if (loginUser == null) {
             throw new LoginUserDontExistException();
+        }
+        if (verificationToken.getCreateTime().plusHours(1).isBefore(LocalDateTime.now())) {
+            throw new VerificationTokenIsTooOldException();
         }
         loginUser.setPassword(passwordEncoder.encode(password));
         loginUserRepository.save(loginUser);

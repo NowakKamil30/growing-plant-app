@@ -70,7 +70,9 @@ public class AuthController {
     public ResponseEntity<Map<String, Boolean>> verifyAccount(@RequestParam String token) {
         try {
             loginUserService.verifyAccount(token);
-        } catch (LoginUserDontExistException | VerificationTokenDontExistException e) {
+        } catch (LoginUserDontExistException |
+                VerificationTokenDontExistException |
+                VerificationTokenIsTooOldException e) {
             throw new BadTokenException("", "isActive");
         }
         return ResponseEntity.ok(Map.of("isActive", true));
@@ -93,7 +95,9 @@ public class AuthController {
         if (args.get("password") != null) {
             try {
                 loginUserService.changePassword(token, args.get("password"));
-            } catch (LoginUserDontExistException | VerificationTokenDontExistException loginUserDontExistException) {
+            } catch (LoginUserDontExistException |
+                    VerificationTokenDontExistException |
+                    VerificationTokenIsTooOldException loginUserDontExistException) {
                 throw new BadTokenException("", "isChange");
             }
             return ResponseEntity.ok(Map.of("isChange", true));
