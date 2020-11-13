@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
+import java.util.Map;
+import java.util.Objects;
 
 @Aspect
 @Component
@@ -47,6 +49,27 @@ public class EmailAspect {
                 loginUserService.deleteById(loginUser.getId());
                 verificationTokenService.deleteById(verificationTokenService
                         .findByToken(verificationToken.getToken()).getId());
+                throw new EmailSendException("problem with sending email");
+            }
+        }
+    }
+
+    @AfterReturning(pointcut = "@annotation(SendResetPasswordEmail)", returning = "result")
+    public void sendResetPasswordEmail(JoinPoint joinPoint, ResponseEntity<Map<String,Boolean>> result) {
+        if (joinPoint.getArgs()[0] instanceof Map && Objects.requireNonNull(result.getBody()).get("isSendEmail")) {
+            Map<String, String> args = (Map) joinPoint.getArgs()[0];
+            String email = args.get("email");
+            LoginUser loginUser = loginUserService.findByEmail(email);
+            verificationTokenService.deleteByLoginUserId(loginUser.getId());
+            VerificationToken verificationToken = verificationTokenService.generateVerificationToken(loginUser);
+            verificationTokenService.add(verificationToken);
+            try {
+                emailService.sendMail(
+                        loginUser.getUser().getEmail(),
+                        "change password",
+                        "http://localhost:3000/change-password?token=" + verificationToken.getToken());
+            } catch (MessagingException e) {
+                verificationTokenService.deleteByLoginUserId(loginUser.getId());
                 throw new EmailSendException("problem with sending email");
             }
         }
