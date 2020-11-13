@@ -51,7 +51,7 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
         verificationTokenRepository.save(verificationToken);
     }
 
-    public VerificationToken findBuToken(String token) {
+    public VerificationToken findByToken(String token) {
         return verificationTokenRepository.findByToken(token);
     }
 
@@ -68,5 +68,9 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
                 .withLoginUser(loginUser)
                 .withToken(token)
                 .build();
+    }
+
+    public void deleteByToken(String token) {
+        verificationTokenRepository.deleteByToken(token);
     }
 }

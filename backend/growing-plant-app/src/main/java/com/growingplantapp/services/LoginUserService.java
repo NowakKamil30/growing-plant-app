@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +20,13 @@ import java.util.Optional;
 public class LoginUserService implements UserDetailsService, ExtendCRUDService<LoginUser, Long> {
     private final LoginUserRepository loginUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final VerificationTokenService verificationTokenService;
 
     @Autowired
-    public LoginUserService(LoginUserRepository loginUserRepository, PasswordEncoder passwordEncoder) {
+    public LoginUserService(LoginUserRepository loginUserRepository, PasswordEncoder passwordEncoder, VerificationTokenService verificationTokenService) {
         this.loginUserRepository = loginUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.verificationTokenService = verificationTokenService;
     }
 
     public LoginUser loadUserByUsername(String username) {
@@ -106,5 +109,13 @@ public class LoginUserService implements UserDetailsService, ExtendCRUDService<L
 
     public LoginUser findByUsername(String username) {
         return loginUserRepository.findByUsername(username);
+    }
+
+    @Transactional
+    public void verifyAccount(String token) {
+        LoginUser loginUser = verificationTokenService.findByToken(token).getLoginUser();
+        loginUser.setEnable(true);
+        loginUserRepository.save(loginUser);
+        verificationTokenService.deleteByToken(token);
     }
 }
