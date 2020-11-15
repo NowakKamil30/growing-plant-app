@@ -23,6 +23,7 @@ import { RegisterUser } from '../../interfaces/RegisterUser';
 import * as Yup from 'yup';
 import PasswordInput from '../inputs/PasswordInput';
 import Checkbox from '../inputs/Checkbox';
+import ApiHandlerButton from '../buttons/ApiHandlerButton';
 
 interface MapDispatcherToProps {
     showRegisterDialog: (isVisible: boolean) => DialogControlTypes;
@@ -104,7 +105,8 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
                       .required('forms.errors.isRequired')
                       .min(8, 'forms.errors.wrongLenghtPassword')
                       .max(20, 'forms.errors.wrongLenghtPassword')
-                      .trim('forms.errors.noStartOrEndWithSpace'),
+                      .trim('forms.errors.noStartOrEndWithSpace')
+                      .oneOf([Yup.ref('passwordRegister'), ''], 'forms.errors.matchPassword'),
       firstNameRegister: Yup
                 .string()
                 .strict(true)
@@ -124,6 +126,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
                           .default(false)
     }),
     onSubmit: (values: RegisterUser) => {
+      console.log(values);
     }
   });
 
@@ -227,15 +230,19 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             labelI18Key='forms.register.isAcceptedDocument'
             color='secondary'
             />
-            </form>
             <DialogActions>
-            <Button onClick={ () => showRegisterDialog(false) } color='secondary'>
-              <Trans i18nKey='action.register'/>
-            </Button>
+            <ApiHandlerButton
+                type='submit'
+                disabled = { !isValid || touched === {} || !dirty }
+                color='secondary'
+                i18nKey='action.register'
+                isFetching={ false }
+            />
             <Button onClick={ () => showRegisterDialog(false) } color='secondary'>
               <Trans i18nKey='action.cancel'/>
             </Button>
           </DialogActions>
+            </form>
           </DialogContent>
         </Dialog>
       );
