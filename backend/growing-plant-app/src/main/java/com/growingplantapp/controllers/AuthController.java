@@ -58,7 +58,14 @@ public class AuthController {
     @PostMapping("/register")
     @SendActivityAccountEmail
     public ResponseEntity<Void> register(@RequestBody LoginUser loginUser) {
-        if (!loginUserService.isExistAccountSoft(loginUser.getUsername())) {
+        LoginUser loginUserFromDatabase = loginUserService.findByUsername(loginUser.getUsername());
+        if (loginUserFromDatabase != null && !loginUserFromDatabase.isEnabled()) {
+            loginUserService.deleteById(loginUserFromDatabase.getId());
+            loginUser.getUser().setLoginUser(loginUser);
+            loginUserService.add(loginUser);
+            return ResponseEntity.ok().build();
+        }
+        if (loginUserFromDatabase == null ) {
             loginUser.getUser().setLoginUser(loginUser);
             loginUserService.add(loginUser);
             return ResponseEntity.ok().build();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -78,5 +79,9 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
     @Transactional
     public void deleteByLoginUserId(Long id) {
         verificationTokenRepository.deleteByLoginUser_Id(id);
+    }
+
+    public void deleteAllByCreateTimeBefore(LocalDateTime localDateTime) {
+        verificationTokenRepository.deleteAllByCreateTimeBefore(localDateTime);
     }
 }
