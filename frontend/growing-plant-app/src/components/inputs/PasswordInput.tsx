@@ -8,7 +8,7 @@ interface PasswordInputProps {
     id?: string;
     name?: string;
     i18nKeyTitle: string;
-    password: string;
+    password: string | undefined;
     className: string;
     isError?: boolean;
     i18nKeyErrorText?: string;

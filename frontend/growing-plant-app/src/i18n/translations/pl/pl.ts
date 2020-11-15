@@ -39,7 +39,7 @@ const pl = {
             },
             register: {
                 title: 'zarejestruj się',
-                confirmPassword: 'powierdz hasło',
+                confirmPassword: 'potwierdz hasło',
                 isAcceptedDocument: 'akceptuje regulamin',
                 email: 'email',
                 lastName: 'nazwisko',

@@ -52,13 +52,13 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
 }): JSX.Element => {
   const { form, input } = useStyles();
   const initialValues: RegisterUser = {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    isAcceptedDocument: false,
+    usernameRegister: '',
+    emailRegister: '',
+    passwordRegister: '',
+    confirmPasswordRegister: '',
+    firstNameRegister: '',
+    lastNameRegister: '',
+    isAcceptedDocumentRegister: false,
   };
 
   const {
@@ -76,14 +76,14 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
   } = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
-      username: Yup
+      usernameRegister: Yup
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
                 .min(8, 'forms.errors.wrongLenghtUsername')
                 .max(20, 'forms.errors.wrongLenghtUsername')
                 .trim('forms.errors.noStartOrEndWithSpace'),
-      email: Yup
+      emailRegister: Yup
             .string()
             .strict(true)
             .required('forms.errors.isRequired')
@@ -91,35 +91,35 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             .max(40, 'forms.errors.wrongLenghtUsername')
             .email()
             .trim('forms.errors.noStartOrEndWithSpace'),
-      password: Yup
+      passwordRegister: Yup
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
                 .min(8, 'forms.errors.wrongLenghtPassword')
                 .max(20, 'forms.errors.wrongLenghtPassword')
                 .trim('forms.errors.noStartOrEndWithSpace'),
-      confirmPassword: Yup
+      confirmPasswordRegister: Yup
                       .string()
                       .strict(true)
                       .required('forms.errors.isRequired')
                       .min(8, 'forms.errors.wrongLenghtPassword')
                       .max(20, 'forms.errors.wrongLenghtPassword')
                       .trim('forms.errors.noStartOrEndWithSpace'),
-      firstName: Yup
+      firstNameRegister: Yup
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
                 .min(8, 'forms.errors.wrongLenghtUsername')
                 .max(20, 'forms.errors.wrongLenghtUsername')
                 .trim('forms.errors.noStartOrEndWithSpace'),
-      lastName: Yup
+      lastNameRegister: Yup
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
                 .min(8, 'forms.errors.wrongLenghtUsername')
                 .max(20, 'forms.errors.wrongLenghtUsername')
                 .trim('forms.errors.noStartOrEndWithSpace'),
-      isAcceptedDocument: Yup
+      isAcceptedDocumentRegister: Yup
                           .bool()
                           .default(false)
     }),
@@ -135,6 +135,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
           onClose={ () => showRegisterDialog(false) }
           aria-labelledby='alert-dialog-slide-title'
           aria-describedby='alert-dialog-slide-description'
+          fullWidth={ true }
         >
           <DialogTitle id='alert-dialog-slide-title'>
             <Trans i18nKey='forms.register.title'/>
@@ -146,81 +147,81 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             className={ form }
             >
             <TextField
-            id='username'
-            name='username'
-            error={ !!errors.username }
+            id='usernameRegister'
+            name='usernameRegister'
+            error={ !!errors.usernameRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            value={ values.username }
+            value={ values.usernameRegister }
             label={ <Trans i18nKey='forms.login.username'/> }
             color='secondary'
             className={ input }
-            helperText={ <Trans i18nKey={ errors.username }/> }
+            helperText={ <Trans i18nKey={ errors.usernameRegister }/> }
             />
             <TextField
-            id='firstName'
-            name='firstName'
-            error={ !!errors.firstName }
+            id='firstNameRegister'
+            name='firstNameRegister'
+            error={ !!errors.firstNameRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            value={ values.firstName }
+            value={ values.firstNameRegister }
             label={ <Trans i18nKey='forms.register.firstName'/> }
             color='secondary'
             className={ input }
-            helperText={ <Trans i18nKey={ errors.firstName }/> }
+            helperText={ <Trans i18nKey={ errors.firstNameRegister }/> }
             />
             <TextField
-            id='lastName'
-            name='lastName'
-            error={ !!errors.lastName }
+            id='lastNameRegister'
+            name='lastNameRegister'
+            error={ !!errors.lastNameRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            value={ values.lastName }
+            value={ values.lastNameRegister }
             label={ <Trans i18nKey='forms.register.lastName'/> }
             color='secondary'
             className={ input }
-            helperText={ <Trans i18nKey={ errors.lastName }/> }
+            helperText={ <Trans i18nKey={ errors.lastNameRegister }/> }
             />
             <TextField
-            id='email'
-            name='email'
-            error={ !!errors.email }
+            id='emailRegister'
+            name='emailRegister'
+            error={ !!errors.emailRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            value={ values.email }
+            value={ values.emailRegister }
             label={ <Trans i18nKey='forms.register.email'/> }
             color='secondary'
             className={ input }
-            helperText={ <Trans i18nKey={ errors.email }/> }
+            helperText={ <Trans i18nKey={ errors.emailRegister }/> }
             />
             <PasswordInput
-            id='password'
-            name='password'
-            isError={ !!errors.password }
+            id='passwordRegister'
+            name='passwordRegister'
+            isError={ !!errors.passwordRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            password={ values.password }
+            password={ values.passwordRegister }
             i18nKeyTitle='forms.login.password'
-            i18nKeyErrorText = { errors.password }
+            i18nKeyErrorText = { errors.passwordRegister }
             color='secondary'
             className={ input }
             />
             <PasswordInput
-            id='confirmPassword'
-            name='confirmPassword'
-            isError={ !!errors.confirmPassword }
+            id='confirmPasswordRegister'
+            name='confirmPasswordRegister'
+            isError={ !!errors.confirmPasswordRegister }
             onChange={ handleChange }
             onBlur={ handleBlur }
-            password={ values.password }
+            password={ values.confirmPasswordRegister }
             i18nKeyTitle='forms.register.confirmPassword'
-            i18nKeyErrorText = { errors.confirmPassword }
+            i18nKeyErrorText = { errors.confirmPasswordRegister }
             color='secondary'
             className={ input }
             />
             <Checkbox
-            id='isAcceptedDocument'
-            name='isAcceptedDocument'
-            value={ values.isAcceptedDocument }
+            id='isAcceptedDocumentRegister'
+            name='isAcceptedDocumentRegister'
+            value={ values.isAcceptedDocumentRegister }
             // tslint:disable-next-line: no-unsafe-any
             // onChange={ (e) => setValues({ ...values, isSave: !values.isSave})}
             labelI18Key='forms.register.isAcceptedDocument'
