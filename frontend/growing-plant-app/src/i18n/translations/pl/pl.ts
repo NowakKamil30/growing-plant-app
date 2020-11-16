@@ -52,8 +52,13 @@ const pl = {
             errors: {
                 wrongLenghtUsername: 'niepoprawna długość nazwy użytkownika(8-20 znaków)',
                 wrongLenghtPassword: 'niepoprawna długość hasła(8-20 znaków)',
+                wrongLenghtEmail: 'niepoprawna długość emailu(5-50)',
+                wrongLenghtFirstName: 'niepoprawna długość imienia(2-30)',
+                wrongLenghtLastName: 'niepoprawna dłogość nazwiska(2-30)',
                 isRequired: 'jest wymagane',
                 noStartOrEndWithSpace: 'nie może zaczynać się lub kończyć spacją',
+                matchPassword: 'hasła nie pasują do siebie',
+
             }
         },
         errors: {

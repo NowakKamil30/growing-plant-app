@@ -121,8 +121,8 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             .string()
             .strict(true)
             .required('forms.errors.isRequired')
-            .min(8, 'forms.errors.wrongLenghtUsername')
-            .max(40, 'forms.errors.wrongLenghtUsername')
+            .min(5, 'forms.errors.wrongLenghtEmail')
+            .max(50, 'forms.errors.wrongLenghtEmail')
             .email()
             .trim('forms.errors.noStartOrEndWithSpace'),
       passwordRegister: Yup
@@ -144,15 +144,15 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
-                .min(8, 'forms.errors.wrongLenghtUsername')
-                .max(20, 'forms.errors.wrongLenghtUsername')
+                .min(2, 'forms.errors.wrongLenghtFirstName')
+                .max(30, 'forms.errors.wrongLenghtFirstName')
                 .trim('forms.errors.noStartOrEndWithSpace'),
       lastNameRegister: Yup
                 .string()
                 .strict(true)
                 .required('forms.errors.isRequired')
-                .min(8, 'forms.errors.wrongLenghtUsername')
-                .max(20, 'forms.errors.wrongLenghtUsername')
+                .min(2, 'forms.errors.wrongLenghtLastName')
+                .max(30, 'forms.errors.wrongLenghtLastName')
                 .trim('forms.errors.noStartOrEndWithSpace'),
       isAcceptedDocumentRegister: Yup
                           .bool()
