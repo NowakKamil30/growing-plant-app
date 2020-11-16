@@ -24,23 +24,53 @@ import * as Yup from 'yup';
 import PasswordInput from '../inputs/PasswordInput';
 import Checkbox from '../inputs/Checkbox';
 import ApiHandlerButton from '../buttons/ApiHandlerButton';
+import { register } from '../../stores/api/AuthOperations';
+import { ThunkDispatch } from 'redux-thunk';
+import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
+import { AuthTypes } from '../../stores/types/AuthTypes';
+import { registerMessage } from '../../stores/actions/AuthActions';
+import Snackbar from '../snackbar/Snackbar';
 
 interface MapDispatcherToProps {
     showRegisterDialog: (isVisible: boolean) => DialogControlTypes;
+    register: (
+      registerUser: RegisterUser,
+      successAction?: () => void,
+      errorAction?: () => void
+      ) => void;
+      changeRegisterMessage: (message: SnackbarInfo) => AuthTypes;
 }
 
 interface  MapStateToProps {
     isShowRegisterDialog: boolean;
+    isRegisterFetching: boolean;
+    registerMessage: SnackbarInfo;
 }
 
-const mapDispatcherToProps = (dispatch: Dispatch): MapDispatcherToProps => ({
+const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatcherToProps => ({
     showRegisterDialog: (isDialogVisible: boolean) => (
         dispatch(showRegisterDialog(isDialogVisible))
-    )
+    ),
+    register: async (
+      registerUser: RegisterUser,
+      successAction?: () => void,
+      errorAction?: () => void
+      ) => (
+        await dispatch(register(
+          registerUser,
+          successAction,
+          errorAction
+        ))
+      ),
+      changeRegisterMessage: (error: SnackbarInfo) => (
+        dispatch(registerMessage(error))
+      )
 });
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
-    isShowRegisterDialog: state.dialogControl.isRegisterDialogVisible
+    isShowRegisterDialog: state.dialogControl.isRegisterDialogVisible,
+    isRegisterFetching: state.auth.isRegisterFetching,
+    registerMessage: state.auth.registerMessage
 });
 
 const connector = connect(mapStateToProps, mapDispatcherToProps);
@@ -49,7 +79,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const RegisterDialog: React.FC<PropsFromRedux> = ({
     isShowRegisterDialog,
-    showRegisterDialog
+    isRegisterFetching,
+    registerMessage,
+    showRegisterDialog,
+    register,
+    changeRegisterMessage
 }): JSX.Element => {
   const { form, input } = useStyles();
   const initialValues: RegisterUser = {
@@ -67,7 +101,6 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
     errors,
     isValid,
     touched,
-    isSubmitting,
     dirty,
     handleBlur,
     handleChange,
@@ -127,6 +160,10 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
     }),
     onSubmit: (values: RegisterUser) => {
       console.log(values);
+      register(values, () => {
+        resetForm();
+        showRegisterDialog(false);
+      });
     }
   });
 
@@ -226,17 +263,17 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             name='isAcceptedDocumentRegister'
             value={ values.isAcceptedDocumentRegister }
             // tslint:disable-next-line: no-unsafe-any
-            // onChange={ (e) => setValues({ ...values, isSave: !values.isSave})}
+            onChange={ (e) => setValues({ ...values, isAcceptedDocumentRegister: !values.isAcceptedDocumentRegister})}
             labelI18Key='forms.register.isAcceptedDocument'
             color='secondary'
             />
             <DialogActions>
             <ApiHandlerButton
                 type='submit'
-                disabled = { !isValid || touched === {} || !dirty }
+                disabled = { !isValid || touched === {} || !dirty || !values.isAcceptedDocumentRegister }
                 color='secondary'
                 i18nKey='action.register'
-                isFetching={ false }
+                isFetching={ isRegisterFetching }
             />
             <Button onClick={ () => showRegisterDialog(false) } color='secondary'>
               <Trans i18nKey='action.cancel'/>
@@ -244,6 +281,13 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
           </DialogActions>
             </form>
           </DialogContent>
+          <Snackbar
+          open={ registerMessage.isShow }
+          autoHideDuration={ 9000 }
+          onClose={ () => changeRegisterMessage({ ...registerMessage, isShow: false }) }
+          severity={ registerMessage.severity }
+          i18nKeyTitle={ registerMessage.i18nKeyTitle }
+      />
         </Dialog>
       );
   };

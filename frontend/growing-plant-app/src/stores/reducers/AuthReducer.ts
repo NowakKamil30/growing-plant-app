@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Role } from '../../enums/Role';
 import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
-import { AuthTypes, CHECK_AUTH_LOCAL_STORAGE, SIGN_IN, SIGN_IN_ERROR, SIGN_IN_FETCHING, SIGN_OUT } from '../types/AuthTypes';
+import {
+    AuthTypes,
+    CHECK_AUTH_LOCAL_STORAGE,
+    REGISTER, REGISTER_ERROR,
+    REGISTER_FETCHING,
+    SIGN_IN, SIGN_IN_ERROR,
+    SIGN_IN_FETCHING,
+    SIGN_OUT
+} from '../types/AuthTypes';
 
 export interface AuthReducerState {
     token: string;
@@ -9,6 +17,8 @@ export interface AuthReducerState {
     userId: number;
     signInMessage: SnackbarInfo;
     isSignInFetching: boolean;
+    isRegisterFetching: boolean;
+    registerMessage: SnackbarInfo;
 }
 
 const INITIAL_STATE: AuthReducerState = {
@@ -17,6 +27,8 @@ const INITIAL_STATE: AuthReducerState = {
     role: Role.NO_AUTH,
     signInMessage: { i18nKeyTitle: '', isShow: false, severity: undefined },
     isSignInFetching: false,
+    registerMessage: { i18nKeyTitle: '', isShow: false, severity: undefined },
+    isRegisterFetching: false,
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -40,6 +52,14 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
 
         case SIGN_IN_ERROR: {
             return { ...state, signInMessage: action.payload };
+        }
+
+        case REGISTER_FETCHING: {
+            return { ...state, isRegisterFetching: action.payload };
+        }
+
+        case REGISTER_ERROR: {
+            return { ...state, registerMessage: action.payload };
         }
 
         case SIGN_OUT: {
