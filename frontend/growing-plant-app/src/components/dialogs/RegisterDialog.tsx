@@ -13,9 +13,8 @@ import {
 } from '@material-ui/core';
 import Transition from './Transition';
 import { ReduceTypes } from '../../stores/reducers';
-import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { showRegisterDialog } from '../../stores/actions/DialogControlActions';
+import { showRegisterDialog, showSuccessRegisterDialog } from '../../stores/actions/DialogControlActions';
 import { DialogControlTypes } from '../../stores/types/DialogControlTypes';
 import { Trans } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -39,6 +38,7 @@ interface MapDispatcherToProps {
       errorAction?: () => void
       ) => void;
       changeRegisterMessage: (message: SnackbarInfo) => AuthTypes;
+      showSuccessRegisterDialog: (isVisible: boolean) => DialogControlTypes;
 }
 
 interface  MapStateToProps {
@@ -64,6 +64,9 @@ const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatch
       ),
       changeRegisterMessage: (error: SnackbarInfo) => (
         dispatch(registerMessage(error))
+      ),
+      showSuccessRegisterDialog: (isSuccessRegisterVisible: boolean) => (
+        dispatch(showSuccessRegisterDialog(isSuccessRegisterVisible))
       )
 });
 
@@ -79,6 +82,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const RegisterDialog: React.FC<PropsFromRedux> = ({
     isShowRegisterDialog,
+    showSuccessRegisterDialog,
     isRegisterFetching,
     registerMessage,
     showRegisterDialog,
@@ -162,6 +166,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
       console.log(values);
       register(values, () => {
         resetForm();
+        showSuccessRegisterDialog(true);
         showRegisterDialog(false);
       });
     }

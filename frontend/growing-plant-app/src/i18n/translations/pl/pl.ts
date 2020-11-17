@@ -27,7 +27,8 @@ const pl = {
             logout: 'wyloguj się',
             add: 'dodaj',
             register: 'zarejestruj się',
-            cancel: 'anuluj'
+            cancel: 'anuluj',
+            ok: 'ok'
         },
         forms: {
             login: {
@@ -65,7 +66,9 @@ const pl = {
             loginDefault: 'nie udało się zalogować spróbuj jeszcze raz'
         },
         successes: {
-            loginDefault: 'witamy!'
+            loginDefault: 'witamy!',
+            registerText: 'Sprawdz email w celu potwierdzenia rejestracji',
+            registerTitle: 'rejestracja przebiegła pomyślnie'
         },
         footer: 'stopka'
     }
