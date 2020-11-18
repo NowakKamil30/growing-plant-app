@@ -2,8 +2,7 @@ import { Box } from '@material-ui/core';
 import React from 'react';
 import { Trans } from 'react-i18next';
 
-const VerificationAccount = (props): JSX.Element => {
-    console.log(props);
+const VerificationAccount = (): JSX.Element => {
 
     return (
         <Box component='h1'>

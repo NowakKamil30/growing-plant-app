@@ -13,6 +13,7 @@ import Error404 from '../pages/Error404';
 import { HomePage } from '../pages/HomePage';
 import MyAccount from '../pages/MyAccount';
 import MyDevice from '../pages/MyDevice';
+import VerificationAccount from '../pages/VerificationAccount';
 import { ReduceTypes } from '../stores/reducers';
 import ContactRouter from './ContactRouter';
 import PrivateRoute from './PrivateRoute';
@@ -66,6 +67,13 @@ const RouterSwitch: React.FC<PropsFromRedux> = ({
         redirectPath='/not-found'
         >
             <AdminPanel/>
+        </PrivateRoute>
+        <PrivateRoute
+        path='/verification-account'
+        isAuth={ role !== Role.ADMIN && role !== Role.USER }
+        redirectPath='/not-found'
+        >
+           <VerificationAccount/>
         </PrivateRoute>
         <Route path='/not-found'>
             <Error404/>
