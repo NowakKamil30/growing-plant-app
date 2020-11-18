@@ -65,7 +65,8 @@ public class AuthController {
             loginUserService.add(loginUser);
             return ResponseEntity.ok().build();
         }
-        if (loginUserFromDatabase == null ) {
+        if (loginUserFromDatabase == null) {
+
             loginUser.getUser().setLoginUser(loginUser);
             loginUserService.add(loginUser);
             return ResponseEntity.ok().build();
