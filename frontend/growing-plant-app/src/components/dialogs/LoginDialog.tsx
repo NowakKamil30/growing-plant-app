@@ -148,8 +148,10 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
   );
 
   const closeDialog = (): void => {
-    showLoginDialog(false);
-    resetForm();
+    if (!isSignInFetching) {
+      showLoginDialog(false);
+      resetForm();
+    }
   };
 
     return (
@@ -219,7 +221,8 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
             />
             <Button
             onClick={ closeDialog }
-            color='secondary'>
+            color='secondary'
+            disabled={ isSignInFetching }>
               <Trans i18nKey='action.cancel' />
             </Button>
           </DialogActions>

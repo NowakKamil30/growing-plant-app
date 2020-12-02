@@ -177,7 +177,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
           open={ isShowRegisterDialog }
           TransitionComponent={ Transition }
           keepMounted
-          onClose={ () => showRegisterDialog(false) }
+          onClose={ () => !isRegisterFetching ? showRegisterDialog(false) : null }
           aria-labelledby='alert-dialog-slide-title'
           aria-describedby='alert-dialog-slide-description'
           fullWidth={ true }
@@ -280,7 +280,10 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
                 i18nKey='action.register'
                 isFetching={ isRegisterFetching }
             />
-            <Button onClick={ () => showRegisterDialog(false) } color='secondary'>
+            <Button 
+            onClick={ () => showRegisterDialog(false) } 
+            color='secondary'
+            disabled={ isRegisterFetching }>
               <Trans i18nKey='action.cancel'/>
             </Button>
           </DialogActions>
