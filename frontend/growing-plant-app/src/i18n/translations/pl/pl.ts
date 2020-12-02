@@ -63,12 +63,14 @@ const pl = {
             }
         },
         errors: {
-            loginDefault: 'nie udało się zalogować spróbuj jeszcze raz'
+            loginDefault: 'nie udało się zalogować spróbuj jeszcze raz',
+            activeAccount: 'błedny token'
         },
         successes: {
             loginDefault: 'witamy!',
             registerText: 'Sprawdz email w celu potwierdzenia rejestracji',
-            registerTitle: 'rejestracja przebiegła pomyślnie'
+            registerTitle: 'rejestracja przebiegła pomyślnie',
+            activeAccount: 'Konto zostało aktywowane'
         },
         footer: 'stopka'
     }

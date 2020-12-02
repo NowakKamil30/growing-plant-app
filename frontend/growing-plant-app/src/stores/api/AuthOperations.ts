@@ -3,12 +3,13 @@ import Axios from 'axios';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { LoginUser } from '../../interfaces/LoginUser';
-import { registerFetching, registerMessage, registerToReducer, signInFetching, signInMessage, signInToReducer } from '../actions/AuthActions';
+import { activeAccountFetching, activeAccountMessage, activeAccountToReducer, registerFetching, registerMessage, registerToReducer, signInFetching, signInMessage, signInToReducer } from '../actions/AuthActions';
 import { settings } from '../../settings/settings.json';
 import { LoginUserToServer } from '../../interfaces/LoginUserToServer';
 import { LoginResponse } from '../../interfaces/LoginResponse';
 import { RegisterUser } from '../../interfaces/RegisterUser';
 import { RegisterUserToServer } from '../../interfaces/RegisterUserToServer';
+import { ActiveAccountResponse } from '../../interfaces/ActiveAccountResponse';
 
 const signInSend = async (user: LoginUser): Promise<LoginResponse> => {
     const { basicUrl, auth } = settings.url;
@@ -38,6 +39,13 @@ const registerSend = async (registerUser: RegisterUser): Promise<number> => {
 
     return response.status;
 };
+
+const activeAccountSend = async (token: string): Promise<ActiveAccountResponse> => {
+    const { basicUrl, verifyToken } = settings.url;
+    const response = await Axios.get(basicUrl + verifyToken + '?token=' + token);
+
+    return response.data as ActiveAccountResponse;
+}
 
 export const  signIn = (
     user: LoginUser,
@@ -75,7 +83,6 @@ export const register = (
             dispatch(registerFetching(true));
             try {
                 const status: number = await registerSend(registerUser);
-                console.log('aa', status);
                 dispatch(registerToReducer(true));
                 successAction && successAction();
             } catch(e) {
@@ -88,6 +95,35 @@ export const register = (
                 errorAction && errorAction();
             } finally {
                 dispatch(registerFetching(false));
+            }
+        }
+    );
+
+export const activeAccount = (
+    token: string,
+    successAction?: () => void,
+    errorAction?: () => void): ThunkAction<void, {}, {}, AnyAction> => (
+        async dispatch => {
+            dispatch(activeAccountFetching(true));
+            dispatch(activeAccountToReducer(false));
+            try {
+                const activeAccountResponse: ActiveAccountResponse = await activeAccountSend(token);
+                if (activeAccountResponse.isActive) {
+                    dispatch(activeAccountToReducer(true));
+                    successAction && successAction();
+                } else {
+                    errorAction && errorAction();
+                }
+            } catch(e) {
+                console.log((e as Error).message);
+                dispatch(activeAccountMessage({
+                    i18nKeyTitle: 'errors.activeAccount',
+                    isShow: true,
+                    severity: 'error'
+                }));
+                errorAction && errorAction();
+            } finally {
+                dispatch(activeAccountFetching(false));
             }
         }
     );

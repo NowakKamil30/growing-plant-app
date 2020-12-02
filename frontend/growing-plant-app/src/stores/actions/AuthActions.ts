@@ -2,6 +2,9 @@
 import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import { LoginResponse } from '../../interfaces/LoginResponse';
 import {
+    ACTIVE_ACCOUNT,
+    ACTIVE_ACCOUNT_ERROR,
+    ACTIVE_ACCOUNT_FETCHING,
     AuthTypes,
     CHECK_AUTH_LOCAL_STORAGE,
     REGISTER, REGISTER_ERROR,
@@ -48,5 +51,20 @@ export const registerFetching = (isFetching: boolean): AuthTypes => ({
 
 export const registerMessage = (info: SnackbarInfo): AuthTypes => ({
     type: REGISTER_ERROR,
+    payload: info,
+});
+
+export const activeAccountToReducer = (isActiveCorrect: boolean): AuthTypes => ({
+    type: ACTIVE_ACCOUNT,
+    payload: isActiveCorrect
+});
+
+export const activeAccountFetching = (isFetching: boolean): AuthTypes => ({
+    type: ACTIVE_ACCOUNT_FETCHING,
+    payload: isFetching,
+});
+
+export const activeAccountMessage = (info: SnackbarInfo): AuthTypes => ({
+    type: ACTIVE_ACCOUNT_ERROR,
     payload: info,
 });

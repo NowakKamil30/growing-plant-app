@@ -292,7 +292,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
           onClose={ () => changeRegisterMessage({ ...registerMessage, isShow: false }) }
           severity={ registerMessage.severity }
           i18nKeyTitle={ registerMessage.i18nKeyTitle }
-      />
+        />
         </Dialog>
       );
   };

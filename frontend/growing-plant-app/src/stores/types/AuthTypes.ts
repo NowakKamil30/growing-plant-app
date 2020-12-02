@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import { LoginResponse } from '../../interfaces/LoginResponse';
-import { RegisterUser } from '../../interfaces/RegisterUser';
 export const CHECK_AUTH_LOCAL_STORAGE = 'AUTH_CHECK_AUTH_LOCAL_STORAGE';
 export const SIGN_IN = 'AUTH_SIGN_IN';
 export const SIGN_IN_FETCHING = 'AUTH_SIGN_IN_FETCHING';
@@ -10,6 +9,9 @@ export const SIGN_OUT = 'AUTH_SIGN_OUT';
 export const REGISTER = 'AUTH_REGISTER';
 export const REGISTER_FETCHING = 'AUTH_REGISTER_FETCHING';
 export const REGISTER_ERROR = 'AUTH_REGISTER_ERROR';
+export const ACTIVE_ACCOUNT = 'AUTH_ACTIVE_ACCOUNT';
+export const ACTIVE_ACCOUNT_FETCHING = 'AUTH_ACTIVE_ACCOUNT_FETCHING';
+export const ACTIVE_ACCOUNT_ERROR = 'AUTH_ACTIVE_ACCOUNT_ERROR';
 
 
 interface CheckAuthLocalStorageAction {
@@ -50,6 +52,21 @@ interface RegisterErrorAction {
     payload: SnackbarInfo;
 }
 
+interface ActiveAccountActive {
+    type: typeof ACTIVE_ACCOUNT;
+    payload: boolean;
+}
+
+interface ActiveAccountFetchingActive {
+    type: typeof ACTIVE_ACCOUNT_FETCHING;
+    payload: boolean;
+}
+
+interface ActiveAccountErrorActive {
+    type: typeof ACTIVE_ACCOUNT_ERROR;
+    payload: SnackbarInfo;
+}
+
 
 export type AuthTypes = CheckAuthLocalStorageAction |
                         SignInAction |
@@ -58,4 +75,7 @@ export type AuthTypes = CheckAuthLocalStorageAction |
                         SignInErrorAction |
                         RegisterAction |
                         RegisterFetchingAction |
-                        RegisterErrorAction;
+                        RegisterErrorAction |
+                        ActiveAccountActive |
+                        ActiveAccountFetchingActive |
+                        ActiveAccountErrorActive;

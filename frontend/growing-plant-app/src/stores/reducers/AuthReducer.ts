@@ -2,9 +2,12 @@
 import { Role } from '../../enums/Role';
 import { SnackbarInfo } from '../../interfaces/SnackbarInfo';
 import {
+    ACTIVE_ACCOUNT,
+    ACTIVE_ACCOUNT_ERROR,
+    ACTIVE_ACCOUNT_FETCHING,
     AuthTypes,
     CHECK_AUTH_LOCAL_STORAGE,
-    REGISTER, REGISTER_ERROR,
+    REGISTER_ERROR,
     REGISTER_FETCHING,
     SIGN_IN, SIGN_IN_ERROR,
     SIGN_IN_FETCHING,
@@ -19,6 +22,9 @@ export interface AuthReducerState {
     isSignInFetching: boolean;
     isRegisterFetching: boolean;
     registerMessage: SnackbarInfo;
+    activeAccountSuccess: boolean;
+    isActiveAccountFetching: boolean;
+    activeAccountMessage: SnackbarInfo;
 }
 
 const INITIAL_STATE: AuthReducerState = {
@@ -29,6 +35,9 @@ const INITIAL_STATE: AuthReducerState = {
     isSignInFetching: false,
     registerMessage: { i18nKeyTitle: '', isShow: false, severity: undefined },
     isRegisterFetching: false,
+    activeAccountSuccess: false,
+    isActiveAccountFetching: false,
+    activeAccountMessage: { i18nKeyTitle: '', isShow: false, severity: undefined }
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -41,7 +50,6 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
 
         case SIGN_IN: {
             const { token, userId, role } = action.payload;
-            console.log(token, userId, role);
 
             return { ...state, token, role, userId };
         }
@@ -60,6 +68,18 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
 
         case REGISTER_ERROR: {
             return { ...state, registerMessage: action.payload };
+        }
+
+        case ACTIVE_ACCOUNT_FETCHING: {
+            return { ...state, isActiveAccountFetching: action.payload };
+        }
+
+        case ACTIVE_ACCOUNT_ERROR: {
+            return { ...state, activeAccountMessage: action.payload };
+        }
+
+        case ACTIVE_ACCOUNT : {
+            return { ...state, activeAccountSuccess: action.payload };
         }
 
         case SIGN_OUT: {
