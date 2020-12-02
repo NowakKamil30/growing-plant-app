@@ -127,7 +127,7 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
             .required('forms.errors.isRequired')
             .min(5, 'forms.errors.wrongLenghtEmail')
             .max(50, 'forms.errors.wrongLenghtEmail')
-            .email()
+            .email('forms.errors.notEmail')
             .trim('forms.errors.noStartOrEndWithSpace'),
       passwordRegister: Yup
                 .string()
@@ -280,8 +280,8 @@ const RegisterDialog: React.FC<PropsFromRedux> = ({
                 i18nKey='action.register'
                 isFetching={ isRegisterFetching }
             />
-            <Button 
-            onClick={ () => showRegisterDialog(false) } 
+            <Button
+            onClick={ () => showRegisterDialog(false) }
             color='secondary'
             disabled={ isRegisterFetching }>
               <Trans i18nKey='action.cancel'/>

@@ -28,7 +28,8 @@ const pl = {
             add: 'dodaj',
             register: 'zarejestruj się',
             cancel: 'anuluj',
-            ok: 'ok'
+            ok: 'ok',
+            send: 'wyślij'
         },
         forms: {
             login: {
@@ -46,6 +47,9 @@ const pl = {
                 lastName: 'nazwisko',
                 firstName: 'imię'
             },
+            resetPassword: {
+                title: 'zresetuj hasło'
+            },
             addDevice: {
                 title: 'Dodaj urządzenie',
                 text: 'Proszę podać kod aktywacyjny',
@@ -54,6 +58,7 @@ const pl = {
                 wrongLenghtUsername: 'niepoprawna długość nazwy użytkownika(8-20 znaków)',
                 wrongLenghtPassword: 'niepoprawna długość hasła(8-20 znaków)',
                 wrongLenghtEmail: 'niepoprawna długość emailu(5-50)',
+                notEmail: 'niepoprawny email',
                 wrongLenghtFirstName: 'niepoprawna długość imienia(2-30)',
                 wrongLenghtLastName: 'niepoprawna dłogość nazwiska(2-30)',
                 isRequired: 'jest wymagane',
