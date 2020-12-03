@@ -83,14 +83,6 @@ const ChangePassword: React.FC<PropsFromRedux> = ({
     const { form, input, paper } = useStyles();
     const location = useLocation();
     const history = useHistory();
-    let token: string = '';
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        token = queryParams.get('token') || '';
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const initialValues: FormData  = {
         passwordChange: '',
@@ -127,6 +119,8 @@ const ChangePassword: React.FC<PropsFromRedux> = ({
 
         }),
         onSubmit: (values: FormData) => {
+            const queryParams = new URLSearchParams(location.search);
+            const token = queryParams.get('token') || '';
             changePassword(
                 values.passwordChange,
                 token
