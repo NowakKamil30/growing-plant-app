@@ -9,6 +9,7 @@ import {
 import { Role } from '../enums/Role';
 import About from '../pages/About';
 import AdminPanel from '../pages/AdminPanel';
+import ChangePassword from '../pages/ChangePassword';
 import Error404 from '../pages/Error404';
 import { HomePage } from '../pages/HomePage';
 import MyAccount from '../pages/MyAccount';
@@ -74,6 +75,13 @@ const RouterSwitch: React.FC<PropsFromRedux> = ({
         redirectPath='/not-found'
         >
            <VerificationAccount/>
+        </PrivateRoute>
+        <PrivateRoute
+        path='/change-password'
+        isAuth={ role !== Role.ADMIN && role !== Role.USER }
+        redirectPath='/not-found'
+        >
+           <ChangePassword/>
         </PrivateRoute>
         <Route path='/not-found'>
             <Error404/>

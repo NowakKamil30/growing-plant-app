@@ -15,6 +15,9 @@ export const ACTIVE_ACCOUNT_ERROR = 'AUTH_ACTIVE_ACCOUNT_ERROR';
 export const RESET_PASSWORD = 'AUTH_RESET_PASSWORD';
 export const RESET_PASSWORD_FETCHING = 'AUTH_RESET_PASSWORD_FETCHING';
 export const RESET_PASSWORD_ERROR = 'AUTH_RESET_PASSWORD_ERROR';
+export const CHANGE_PASSWORD = 'AUTH_CHANGE_PASSWORD';
+export const CHANGE_PASSWORD_FETCHING = 'AUTH_CHANGE_PASSWORD_FETCHING';
+export const CHANGE_PASSWORD_ERROR = 'AUTH_CHANGE_PASSWORD_ERROR';
 
 
 interface CheckAuthLocalStorageAction {
@@ -85,6 +88,21 @@ interface ResetPasswordErrorAction {
     payload: SnackbarInfo;
 }
 
+interface ChangePasswordAction {
+    type: typeof CHANGE_PASSWORD;
+    payload: boolean;
+}
+
+interface ChangePasswordFetchingAction {
+    type: typeof CHANGE_PASSWORD_FETCHING;
+    payload: boolean;
+}
+
+interface ChangePasswordErrorAction {
+    type: typeof CHANGE_PASSWORD_ERROR;
+    payload: SnackbarInfo;
+}
+
 
 export type AuthTypes = CheckAuthLocalStorageAction |
                         SignInAction |
@@ -99,4 +117,7 @@ export type AuthTypes = CheckAuthLocalStorageAction |
                         ActiveAccountErrorAction |
                         ResetPasswordAction |
                         ResetPasswordErrorAction |
-                        ResetPasswordFetchingAction;
+                        ResetPasswordFetchingAction |
+                        ChangePasswordAction |
+                        ChangePasswordFetchingAction |
+                        ChangePasswordErrorAction;
