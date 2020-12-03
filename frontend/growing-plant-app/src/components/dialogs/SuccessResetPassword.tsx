@@ -5,7 +5,7 @@ import Transition from './Transition';
 import { ReduceTypes } from '../../stores/reducers';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { showSuccessRegisterDialog, showSuccessResetPasswordDialog } from '../../stores/actions/DialogControlActions';
+import { showSuccessResetPasswordDialog } from '../../stores/actions/DialogControlActions';
 import { DialogControlTypes } from '../../stores/types/DialogControlTypes';
 import { Trans } from 'react-i18next';
 

@@ -65,7 +65,6 @@ const Header: React.FC<PropsFromRedux> = ({
   signOut
   }): JSX.Element => {
   const {
-    root,
     toolbar,
     menuButton,
     title,
@@ -75,7 +74,7 @@ const Header: React.FC<PropsFromRedux> = ({
     const history = useHistory();
 
   return (
-    <Box component='header' className={ root }>
+    <Box component='header'>
       <AppBar position='static'>
         <Toolbar className={toolbar}>
           <IconButton
@@ -129,9 +128,6 @@ const Header: React.FC<PropsFromRedux> = ({
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      flexGrow: 1,
-    },
     toolbar: {
       backgroundColor: theme.palette.secondary.main,
     },

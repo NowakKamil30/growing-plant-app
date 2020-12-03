@@ -19,7 +19,10 @@ const Main = () => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
   }),
 );
