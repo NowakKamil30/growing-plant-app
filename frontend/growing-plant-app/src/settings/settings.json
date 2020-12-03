@@ -10,7 +10,8 @@
             "auth": "/auth",
             "register": "/auth/register",
             "verifyToken": "/auth/verify-token",
-            "changePassword": "/auth/change-password" 
+            "changePassword": "/auth/change-password",
+            "resetPassword": "/auth/reset-password" 
         }
     }
  }

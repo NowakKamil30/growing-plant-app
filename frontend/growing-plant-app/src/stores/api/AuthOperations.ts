@@ -7,6 +7,9 @@ import {
     activeAccountFetching,
     activeAccountMessage,
     activeAccountToReducer,
+    changePasswordError,
+    changePasswordFetching,
+    changePasswordToReducer,
     registerFetching,
     registerMessage,
     registerToReducer,
@@ -25,6 +28,8 @@ import { RegisterUserToServer } from '../../interfaces/RegisterUserToServer';
 import { ActiveAccountResponse } from '../../interfaces/ActiveAccountResponse';
 import { ResetPasswordResponse } from '../../interfaces/ResetPasswordResponse';
 import { ResetPasswordToServer } from '../../interfaces/ResetPasswordToServer';
+import { ChangePasswordResponse } from '../../interfaces/ChangePasswordResponse';
+import { ChangePasswordToServer } from '../../interfaces/ChangePasswordToServer';
 
 const signInSend = async (user: LoginUser): Promise<LoginResponse> => {
     const { basicUrl, auth } = settings.url;
@@ -68,6 +73,14 @@ const resetPasswordSend = async (email: string): Promise<ResetPasswordResponse> 
     const response = await Axios.post(basicUrl + changePassword, resetPasswordToServer);
 
     return response.data as ResetPasswordResponse;
+};
+
+const changePasswordSend = async (password: string, token: string): Promise<ChangePasswordResponse> => {
+    const { basicUrl, resetPassword } = settings.url;
+    const changePassword: ChangePasswordToServer = { password };
+    const response = await Axios.post(basicUrl + resetPassword + '?token=' + token, changePassword);
+
+    return response.data as ChangePasswordResponse;
 };
 
 export const  signIn = (
@@ -179,3 +192,33 @@ export const resetPassword = (
             }
         }
     );
+
+    export const changePassword = (
+        password: string,
+        token: string,
+        successAction?: () => void,
+        errorAction?: () => void): ThunkAction<void, {}, {}, AnyAction> => (
+            async dispatch => {
+                dispatch(changePasswordFetching(true));
+                dispatch(changePasswordToReducer(false));
+                try {
+                    const changePasswordResponse: ChangePasswordResponse = await changePasswordSend(password, token);
+                    if (changePasswordResponse.isChange) {
+                        dispatch(changePasswordToReducer(true));
+                        successAction && successAction();
+                    } else {
+                        errorAction && errorAction();
+                    }
+                } catch(e) {
+                    console.log((e as Error).message);
+                    dispatch(changePasswordError({
+                        i18nKeyTitle: 'errors.changePassword',
+                        isShow: true,
+                        severity: 'error'
+                    }));
+                    errorAction && errorAction();
+                } finally {
+                    dispatch(changePasswordFetching(false));
+                }
+            }
+        );

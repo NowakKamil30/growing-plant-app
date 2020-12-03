@@ -36,7 +36,7 @@ export interface AuthReducerState {
     resetPasswordMessage: SnackbarInfo;
     changePasswordSuccess: boolean;
     isChangePasswordFetching: boolean;
-    chnagePasswordMessage: SnackbarInfo;
+    changePasswordMessage: SnackbarInfo;
 }
 
 const INITIAL_STATE: AuthReducerState = {
@@ -55,7 +55,7 @@ const INITIAL_STATE: AuthReducerState = {
     resetPasswordMessage: { i18nKeyTitle: '', isShow: false, severity: undefined },
     changePasswordSuccess: false,
     isChangePasswordFetching: false,
-    chnagePasswordMessage: { i18nKeyTitle: '', isShow: false, severity: undefined }
+    changePasswordMessage: { i18nKeyTitle: '', isShow: false, severity: undefined }
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -121,7 +121,7 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
         }
 
         case CHANGE_PASSWORD_ERROR: {
-            return {  ...state, chnagePasswordMessage: action.payload };
+            return {  ...state, changePasswordMessage: action.payload };
         }
 
         case SIGN_OUT: {

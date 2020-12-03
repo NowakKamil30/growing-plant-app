@@ -50,6 +50,9 @@ const pl = {
             resetPassword: {
                 title: 'zresetuj hasło'
             },
+            changePassword: {
+                title: 'zmień hasło'
+            },
             addDevice: {
                 title: 'Dodaj urządzenie',
                 text: 'Proszę podać kod aktywacyjny',
@@ -64,13 +67,13 @@ const pl = {
                 isRequired: 'jest wymagane',
                 noStartOrEndWithSpace: 'nie może zaczynać się lub kończyć spacją',
                 matchPassword: 'hasła nie pasują do siebie',
-
             }
         },
         errors: {
             loginDefault: 'nie udało się zalogować spróbuj jeszcze raz',
             activeAccount: 'błedny token',
-            resetPassword: 'coś poszło nie tak'
+            resetPassword: 'coś poszło nie tak',
+            changePassword: 'błedny token lub niepoprawne hasło'
         },
         successes: {
             loginDefault: 'witamy!',
@@ -78,7 +81,8 @@ const pl = {
             registerTitle: 'rejestracja przebiegła pomyślnie',
             activeAccount: 'Konto zostało aktywowane',
             resetPasswordTitle: 'sprawdz swój email!!',
-            resetPasswordText: 'podążaj za instrukacjami otrzymanymi w emailu'
+            resetPasswordText: 'podążaj za instrukacjami otrzymanymi w emailu',
+            changePassword: 'Hasło zostało zmienione'
         },
         footer: 'stopka'
     }
