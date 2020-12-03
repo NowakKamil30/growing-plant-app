@@ -9,6 +9,9 @@ import {
     CHECK_AUTH_LOCAL_STORAGE,
     REGISTER, REGISTER_ERROR,
     REGISTER_FETCHING,
+    RESET_PASSWORD,
+    RESET_PASSWORD_ERROR,
+    RESET_PASSWORD_FETCHING,
     SIGN_IN,
     SIGN_IN_ERROR,
     SIGN_IN_FETCHING,
@@ -67,4 +70,19 @@ export const activeAccountFetching = (isFetching: boolean): AuthTypes => ({
 export const activeAccountMessage = (info: SnackbarInfo): AuthTypes => ({
     type: ACTIVE_ACCOUNT_ERROR,
     payload: info,
+});
+
+export const resetPasswordToReducer = (isSuccess: boolean) => ({
+    type: RESET_PASSWORD,
+    payload: isSuccess
+});
+
+export const resetPasswordFetching = (isFetching: boolean) => ({
+    type: RESET_PASSWORD_FETCHING,
+    payload: isFetching
+});
+
+export const resetPasswordError = (info: SnackbarInfo): AuthTypes => ({
+    type: RESET_PASSWORD_ERROR,
+    payload: info
 });

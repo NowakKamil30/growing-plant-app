@@ -9,7 +9,8 @@
             "basicUrl": "http://localhost:8080/api/v1",
             "auth": "/auth",
             "register": "/auth/register",
-            "verifyToken": "/auth/verify-token"
+            "verifyToken": "/auth/verify-token",
+            "changePassword": "/auth/change-password" 
         }
     }
  }

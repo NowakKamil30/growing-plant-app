@@ -14,9 +14,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import Checkbox from '../inputs/Checkbox';
 import { ReduceTypes } from '../../stores/reducers';
 import Transition from './Transition';
-import { showLoginDialog } from '../../stores/actions/DialogControlActions';
+import { showLoginDialog, showResetPasswordDialog } from '../../stores/actions/DialogControlActions';
 import { Trans } from 'react-i18next';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { DialogControlTypes } from '../../stores/types/DialogControlTypes';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -38,6 +38,7 @@ interface MapDispatcherToProps {
     errorAction?: () => void
     ) => void;
   changeSignInError: (error: SnackbarInfo) => AuthTypes;
+  showResetPasswordDialog: (isVisible: boolean) => DialogControlTypes;
 }
 
 interface  MapStateToProps {
@@ -63,7 +64,10 @@ const mapDispatcherToProps = (dispatch: ThunkDispatch<{}, {}, any>): MapDispatch
     ),
     changeSignInError: (error: SnackbarInfo) => (
       dispatch(signInMessage(error))
-    )
+    ),
+    showResetPasswordDialog: (isDialogVisible: boolean) => (
+      dispatch(showResetPasswordDialog(isDialogVisible))
+  ),
 });
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps => ({
@@ -83,7 +87,8 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
   signInMessage,
   login,
   showLoginDialog,
-  changeSignInError
+  changeSignInError,
+  showResetPasswordDialog
 }): JSX.Element => {
   const { form, input } = useStyles();
   const history = useHistory();
@@ -206,11 +211,19 @@ const LoginDialog: React.FC<PropsFromRedux> = ({
             labelI18Key='forms.login.save'
             color='secondary'
             />
-          <NavLink to='' >
-            <Link color='secondary'>
+            <DialogActions>
+            <Link
+            component='button'
+            variant='subtitle2'
+            color='secondary'
+            disabled={ isSignInFetching }
+            onClick={() => {
+              showLoginDialog(false);
+              showResetPasswordDialog(true);
+            }}>
               <Trans i18nKey='forms.login.forgottenPassword' />
             </Link>
-          </NavLink>
+            </DialogActions>
           <DialogActions>
           <ApiHandlerButton
                 type='submit'
@@ -247,6 +260,7 @@ const useStyles = makeStyles((theme: Theme) =>(
     form: {
       display: 'flex',
       flexDirection: 'column',
+      minHeight: '30vh'
     }
   })
 ));

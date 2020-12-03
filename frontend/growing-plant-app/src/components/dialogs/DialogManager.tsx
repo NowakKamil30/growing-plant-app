@@ -4,6 +4,7 @@ import LoginDialog from './LoginDialog';
 import RegisterDialog from './RegisterDialog';
 import ResetPasswordDialog from './ResetPasswordDialog';
 import SuccessRegisterDialog from './SuccessRegisterDialog';
+import SuccessResetPassword from './SuccessResetPassword';
 
 const DialogManager = (): JSX.Element => {
 
@@ -14,6 +15,7 @@ const DialogManager = (): JSX.Element => {
             <AddDeviceDialog/>
             <SuccessRegisterDialog/>
             <ResetPasswordDialog/>
+            <SuccessResetPassword/>
         </>
     );
 };

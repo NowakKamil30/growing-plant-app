@@ -12,6 +12,9 @@ export const REGISTER_ERROR = 'AUTH_REGISTER_ERROR';
 export const ACTIVE_ACCOUNT = 'AUTH_ACTIVE_ACCOUNT';
 export const ACTIVE_ACCOUNT_FETCHING = 'AUTH_ACTIVE_ACCOUNT_FETCHING';
 export const ACTIVE_ACCOUNT_ERROR = 'AUTH_ACTIVE_ACCOUNT_ERROR';
+export const RESET_PASSWORD = 'AUTH_RESET_PASSWORD';
+export const RESET_PASSWORD_FETCHING = 'AUTH_RESET_PASSWORD_FETCHING';
+export const RESET_PASSWORD_ERROR = 'AUTH_RESET_PASSWORD_ERROR';
 
 
 interface CheckAuthLocalStorageAction {
@@ -52,18 +55,33 @@ interface RegisterErrorAction {
     payload: SnackbarInfo;
 }
 
-interface ActiveAccountActive {
+interface ActiveAccountAction {
     type: typeof ACTIVE_ACCOUNT;
     payload: boolean;
 }
 
-interface ActiveAccountFetchingActive {
+interface ActiveAccountFetchingAction {
     type: typeof ACTIVE_ACCOUNT_FETCHING;
     payload: boolean;
 }
 
-interface ActiveAccountErrorActive {
+interface ActiveAccountErrorAction {
     type: typeof ACTIVE_ACCOUNT_ERROR;
+    payload: SnackbarInfo;
+}
+
+interface ResetPasswordAction {
+    type: typeof RESET_PASSWORD;
+    payload: boolean;
+}
+
+interface ResetPasswordFetchingAction {
+    type: typeof RESET_PASSWORD_FETCHING;
+    payload: boolean;
+}
+
+interface ResetPasswordErrorAction {
+    type: typeof RESET_PASSWORD_ERROR;
     payload: SnackbarInfo;
 }
 
@@ -76,6 +94,9 @@ export type AuthTypes = CheckAuthLocalStorageAction |
                         RegisterAction |
                         RegisterFetchingAction |
                         RegisterErrorAction |
-                        ActiveAccountActive |
-                        ActiveAccountFetchingActive |
-                        ActiveAccountErrorActive;
+                        ActiveAccountAction |
+                        ActiveAccountFetchingAction |
+                        ActiveAccountErrorAction |
+                        ResetPasswordAction |
+                        ResetPasswordErrorAction |
+                        ResetPasswordFetchingAction;

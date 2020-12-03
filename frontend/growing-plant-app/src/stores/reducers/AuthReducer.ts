@@ -9,6 +9,9 @@ import {
     CHECK_AUTH_LOCAL_STORAGE,
     REGISTER_ERROR,
     REGISTER_FETCHING,
+    RESET_PASSWORD,
+    RESET_PASSWORD_ERROR,
+    RESET_PASSWORD_FETCHING,
     SIGN_IN, SIGN_IN_ERROR,
     SIGN_IN_FETCHING,
     SIGN_OUT
@@ -25,6 +28,9 @@ export interface AuthReducerState {
     activeAccountSuccess: boolean;
     isActiveAccountFetching: boolean;
     activeAccountMessage: SnackbarInfo;
+    resetPasswordSuccess: boolean;
+    isResetPasswordFetching: boolean;
+    resetPasswordMessage: SnackbarInfo;
 }
 
 const INITIAL_STATE: AuthReducerState = {
@@ -37,7 +43,10 @@ const INITIAL_STATE: AuthReducerState = {
     isRegisterFetching: false,
     activeAccountSuccess: false,
     isActiveAccountFetching: false,
-    activeAccountMessage: { i18nKeyTitle: '', isShow: false, severity: undefined }
+    activeAccountMessage: { i18nKeyTitle: '', isShow: false, severity: undefined },
+    resetPasswordSuccess: false,
+    isResetPasswordFetching: false,
+    resetPasswordMessage: { i18nKeyTitle: '', isShow: false, severity: undefined }
 };
 
 export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: AuthTypes)
@@ -80,6 +89,18 @@ export const AuthReducer = (state: AuthReducerState = INITIAL_STATE, action: Aut
 
         case ACTIVE_ACCOUNT : {
             return { ...state, activeAccountSuccess: action.payload };
+        }
+
+        case RESET_PASSWORD : {
+            return {  ...state, resetPasswordSuccess: action.payload };
+        }
+
+        case RESET_PASSWORD_FETCHING: {
+            return {  ...state, isResetPasswordFetching: action.payload };
+        }
+
+        case RESET_PASSWORD_ERROR: {
+            return {  ...state, resetPasswordMessage: action.payload };
         }
 
         case SIGN_OUT: {
