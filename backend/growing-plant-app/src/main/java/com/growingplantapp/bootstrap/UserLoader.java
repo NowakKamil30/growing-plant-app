@@ -35,8 +35,9 @@ public class UserLoader implements CommandLineRunner {
         if (userService.getAll().size() == 0) {
             LoginUser loginUser = new LoginUser();
             loginUser.setUsername("test1234");
-            loginUser.setPassword(passwordEncoder.encode("test1234"));
+            loginUser.setPassword("test1234");
             loginUser.setRole(Role.ADMIN);
+            loginUser.setEnable(true);
             User user = UserBuilder.anUser()
                     .withEmail("ka@com.com")
                     .withFirstName("test")

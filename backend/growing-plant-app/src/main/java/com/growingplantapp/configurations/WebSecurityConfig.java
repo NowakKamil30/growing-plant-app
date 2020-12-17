@@ -37,7 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyRole(Role.ADMIN.toString());
+                .antMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyRole(
+                        Role.ADMIN.toString(),
+                        Role.USER.toString());
         http.csrf().disable();
     }
 }

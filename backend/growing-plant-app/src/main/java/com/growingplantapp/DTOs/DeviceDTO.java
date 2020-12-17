@@ -47,6 +47,7 @@ public class DeviceDTO {
                 .stream()
                 .map(Weather::getId)
                 .collect(Collectors.toList());
+        if(device.getTypeDevice() != null)
         this.typeDeviceId = device.getTypeDevice().getId();
         this.isActive = device.isActive();
     }

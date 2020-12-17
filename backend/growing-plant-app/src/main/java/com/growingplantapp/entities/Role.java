@@ -1,5 +1,5 @@
 package com.growingplantapp.entities;
 
 public enum Role {
-    USER, ADMIN
+    USER, ADMIN, DEVICE, PRODUCER
 }

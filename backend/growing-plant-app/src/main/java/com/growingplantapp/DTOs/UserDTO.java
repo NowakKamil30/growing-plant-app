@@ -21,7 +21,7 @@ public class UserDTO {
     @JsonView(Views.Private.class)
     private LocalDateTime activeAccountData;
     @JsonView(Views.Public.class)
-    private List<Long> devicesId;
+    private List<DeviceDTO> devices;
     @JsonView(Views.Private.class)
     private List<Long> supportMessagesId;
     @JsonView(Views.Private.class)
@@ -33,10 +33,10 @@ public class UserDTO {
     public UserDTO(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
-        this.devicesId = user
+        this.devices = user
                 .getDevices()
                 .stream()
-                .map(Device::getId)
+                .map(device -> new DeviceDTO(device))
                 .collect(Collectors.toList());
         this.supportMessagesId = user
                 .getSupportMessages()
@@ -97,12 +97,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public List<Long> getDevicesId() {
-        return devicesId;
+    public List<DeviceDTO> getDevices() {
+        return devices;
     }
 
-    public void setDevicesId(List<Long> devicesId) {
-        this.devicesId = devicesId;
+    public void setDevices(List<DeviceDTO> devices) {
+        this.devices = devices;
     }
 
     public List<Long> getSupportMessagesId() {
