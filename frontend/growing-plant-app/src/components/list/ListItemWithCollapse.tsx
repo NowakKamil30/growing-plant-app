@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Collapse, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import React from 'react';
-import { Trans } from 'react-i18next';
 import ListItemButton from './ListItemButton';
 
 interface ListItemWithCollapseProps {

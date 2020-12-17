@@ -35,6 +35,7 @@ import ListItemLink from '../list/ListItemLink';
 import { Role } from '../../enums/Role';
 import { showAddDeviceDialog } from '../../stores/actions/DialogControlActions';
 import ListItemButton from '../list/ListItemButton';
+import { Device } from '../../interfaces/Device';
 
 interface MapDispatcherToProps {
     changeDrawerVisible: (isVisible: boolean) => void;
@@ -71,6 +72,7 @@ interface  MapStateToProps {
     isExpandContact: boolean;
     isAddDeviceDialogVisible: boolean;
     role: Role;
+    devices?: Device[];
 }
 
 const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
@@ -80,6 +82,7 @@ const mapStateToProps = (state: ReduceTypes): MapStateToProps =>({
     isExpandContact: state.drawerControl.isExpandContactList,
     isAddDeviceDialogVisible: state.dialogControl.isAddDeviceDialogVisible,
     role: state.auth.role,
+    devices: state.user.user?.devices
 });
 
 const connector = connect(mapStateToProps, mapDispatcherToProps);
@@ -92,6 +95,7 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
     isExpandShop,
     isExpandContact,
     role,
+    devices,
     expandMyDevices,
     expandShop,
     changeDrawerVisible,
@@ -143,11 +147,12 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                         onClick={() => expandMyDevices(!isExpandMyDevices) }
                         list={() => (
                         <List component='div' disablePadding className={ nested }>
-                            <ListItemLink
-                                icon={ () => <ImportantDevicesIcon /> }
-                                i18nKeyTitle='blank'
-                                path=''
-                            />
+                            {devices?.map((device: Device) => (                
+                                <ListItemLink
+                            icon={ () => <ImportantDevicesIcon /> }
+                            i18nKeyTitle={device.name}
+                            path=''
+                        />))}
                     </List>
                 )}
             />

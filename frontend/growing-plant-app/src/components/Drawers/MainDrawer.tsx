@@ -20,7 +20,7 @@ const mapDispatcherToProps = (dispatch: Dispatch) => (
 
 const mapStateToProps = (state: ReduceTypes): any =>({
     isVisible: state.drawerControl.isMainDrawerVisible,
-    anchor: state.drawerControl.mainDrawerAnchor
+    anchor: state.drawerControl.mainDrawerAnchor,
 });
 
 const connector = connect(mapStateToProps, mapDispatcherToProps);

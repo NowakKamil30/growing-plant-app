@@ -11,7 +11,8 @@
             "register": "/auth/register",
             "verifyToken": "/auth/verify-token",
             "changePassword": "/auth/change-password",
-            "resetPassword": "/auth/reset-password" 
+            "resetPassword": "/auth/reset-password",
+            "getUserData": "/user"
         }
     }
  }
