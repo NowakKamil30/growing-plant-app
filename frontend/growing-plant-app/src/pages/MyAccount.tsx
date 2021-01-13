@@ -5,6 +5,7 @@ import { Trans } from 'react-i18next';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import DeviceList from '../components/deviceList/DeviceList';
+import Snackbar from '../components/snackbar/Snackbar';
 import UserCard from '../components/UserCard';
 import { SnackbarInfo } from '../interfaces/SnackbarInfo';
 import { User } from '../interfaces/User';
@@ -75,7 +76,7 @@ const MyAccount: React.FC<PropsFromRedux> = ({
     downloadUserData,
     dowlonadUserDataMessage
 }) => {
-    const { root, data, title } = useStyles();
+    const { root, data, title, dataItem } = useStyles();
     useEffect(() => {
         downloadUserData(id, token);
     }, []);
@@ -85,18 +86,29 @@ const MyAccount: React.FC<PropsFromRedux> = ({
                 <div className={ root }>
                     <h1 className={ title }><Trans i18nKey='pages.myAccount'/></h1>
                     <div className={ data }>
-                        <UserCard 
-                        user={ user }
-                        i18nTitle='pages.myAccount'
-                        />
-                        {user?.devices.length && user?.devices.length > 0? (
-                            <DeviceList
-                            devices={ user?.devices }
+                        <div className={ dataItem }>
+                            <UserCard 
+                            user={ user }
+                            i18nTitle='pages.myAccount'
                             />
-                        ) : <p>aaaa</p>}
+                        </div>
+                        <div  className={ dataItem }>
+                            {user?.devices.length && user?.devices.length > 0? (
+                                <DeviceList
+                                devices={ user?.devices }
+                                />
+                            ) : <p><Trans i18nKey='account.noDevices'/></p>}
+                        </div>
                     </div>
                 </div>
             )}
+            <Snackbar
+                open={ userError.isShow }
+                autoHideDuration={ 9000 }
+                onClose={ () => dowlonadUserDataMessage({ ...userError, isShow: false }) }
+                severity={ userError.severity }
+                i18nKeyTitle={ userError.i18nKeyTitle }
+            />
         </>
     );
 };
@@ -107,6 +119,7 @@ const useStyles = makeStyles((theme: Theme) =>
      display: 'flex',
      flexDirection: 'column',
      alignItems: 'center',
+     justifyContent: 'start',
      flexGrow: 1
     },
     title: {
@@ -115,7 +128,13 @@ const useStyles = makeStyles((theme: Theme) =>
     data: {
         display: 'flex',
         justifyContent: 'space-around',
+        alignItems: 'space-around',
         flexDirection: 'row',
+        flexGrow: 1
+    },
+    dataItem: {
+        marginRight: 50,
+        marginLeft: 50
     }
   }),
 );

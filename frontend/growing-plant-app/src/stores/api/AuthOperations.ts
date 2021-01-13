@@ -38,9 +38,10 @@ const signInSend = async (user: LoginUser): Promise<LoginResponse> => {
     } else {
         localStorage.removeItem('username');
     }
+
     const loginUserToServer: LoginUserToServer = { username: user.username, password: user.password };
     const response = await Axios.post(basicUrl + auth, loginUserToServer);
-
+    console.log(response.data)
     return response.data as LoginResponse;
 };
 

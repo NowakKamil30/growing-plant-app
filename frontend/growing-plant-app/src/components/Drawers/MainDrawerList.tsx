@@ -148,12 +148,12 @@ const MainDrawerList: React.FC<PropsFromRedux> = ({
                         list={() => (
                         <List component='div' disablePadding className={ nested }>
                             {devices?.map((device: Device) => (                
-                                <ListItemLink
+                            <ListItemLink
                             icon={ () => <ImportantDevicesIcon /> }
-                            i18nKeyTitle={device.name}
-                            path=''
-                        />))}
-                    </List>
+                            i18nKeyTitle={ device.name }
+                            path={ '/my-device/' + device.id } 
+                            />))}
+                        </List>
                 )}
             />
                 </> ): null}

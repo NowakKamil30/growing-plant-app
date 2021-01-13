@@ -84,6 +84,9 @@ const pl = {
             resetPasswordText: 'podążaj za instrukacjami otrzymanymi w emailu',
             changePassword: 'Hasło zostało zmienione'
         },
+        account: {
+            noDevices: 'nie posiadasz urządzeń'
+        },
         footer: 'stopka'
     }
 };

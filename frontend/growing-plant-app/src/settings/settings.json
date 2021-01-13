@@ -12,7 +12,8 @@
             "verifyToken": "/auth/verify-token",
             "changePassword": "/auth/change-password",
             "resetPassword": "/auth/reset-password",
-            "getUserData": "/user"
+            "getUserData": "/user",
+            "getWeatherData": "/weather/device"
         }
     }
  }

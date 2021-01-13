@@ -10,10 +10,10 @@ const getUserDataSend = async (id: number, token: string): Promise<User> => {
     const { basicUrl, getUserData } = settings.url;
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token ? token : localStorage.getItem('token')}`,
         }
       }
-    const response = await Axios.get(basicUrl + getUserData +`/${id}`, config);
+    const response = await Axios.get(basicUrl + getUserData +`/${id && id !== -1 ? id : localStorage.getItem('userId')}`, config);
     return response.data as User;
 }
 

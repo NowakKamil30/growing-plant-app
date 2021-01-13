@@ -14,7 +14,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
     children
 })
 :JSX.Element => {
-
+  console.log(isAuth)
     return (
         <Route
         path={ path }
