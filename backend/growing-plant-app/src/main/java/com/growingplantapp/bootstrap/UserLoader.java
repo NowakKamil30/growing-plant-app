@@ -4,6 +4,7 @@ package com.growingplantapp.bootstrap;
 import com.growingplantapp.builders.DeviceBuilder;
 import com.growingplantapp.builders.PlantBuilder;
 import com.growingplantapp.builders.UserBuilder;
+import com.growingplantapp.builders.WeatherBuilder;
 import com.growingplantapp.entities.*;
 import com.growingplantapp.services.LoginUserService;
 import com.growingplantapp.services.UserService;
@@ -12,7 +13,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class UserLoader implements CommandLineRunner {
@@ -53,6 +59,22 @@ public class UserLoader implements CommandLineRunner {
                     .withDevice(device)
                     .build();
             device.setPlants(List.of(plant));
+            device.setWeathers(new ArrayList<Weather>());
+            Random random = new Random();
+            for (int i = 0; i < 360 * 24; i++) {
+                long milliseconds = new Date().getTime();
+                long time = milliseconds - 3600_000 * (360 * 24 - i);
+                device.getWeathers().add(WeatherBuilder.aWeather()
+                        .withRain(random.nextInt(101))
+                        .withInsolation(random.nextInt(101))
+                        .withTemperature(random.nextInt(50) - 20)
+                        .withDevice(device)
+                        .withLocalDateTime(Instant
+                                .ofEpochMilli(time)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDateTime())
+                        .build());
+            }
             user.setDevices(List.of(device));
             loginUser.setUser(user);
             user.setLoginUser(loginUser);

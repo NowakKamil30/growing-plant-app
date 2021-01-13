@@ -8,6 +8,8 @@ import com.growingplantapp.entities.LoginUser;
 import com.growingplantapp.exceptions.*;
 import com.growingplantapp.models.LoginResponse;
 import com.growingplantapp.services.LoginUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -20,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final LoginUserService loginUserService;
 
     @Autowired
@@ -30,11 +32,13 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<LoginResponse> login(@RequestBody LoginUser user) {
+        logger.debug("login");
         String sign = null;
         LoginUser loginUser;
         try {
             loginUser = loginUserService.loadUserByUsername(user.getUsername());
         } catch (BadUsernameException e) {
+            logger.error("login");
             throw new BadJwtException(e.getMessage());
         }
 
@@ -51,13 +55,14 @@ public class AuthController {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setRole(loginUser.getRole());
         loginResponse.setToken(sign);
-        loginResponse.setUserId(loginUser.getId());
+        loginResponse.setUserId(loginUser.getUser().getId());
         return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/register")
     @SendActivityAccountEmail
     public ResponseEntity<Void> register(@RequestBody LoginUser loginUser) {
+        logger.debug("register");
         LoginUser loginUserFromDatabase = loginUserService.findByUsername(loginUser.getUsername());
         if (loginUserFromDatabase != null && !loginUserFromDatabase.isEnabled()) {
             loginUserService.deleteById(loginUserFromDatabase.getId());
@@ -76,11 +81,13 @@ public class AuthController {
 
     @GetMapping("/verify-token")
     public ResponseEntity<Map<String, Boolean>> verifyAccount(@RequestParam String token) {
+        logger.debug("verifyAccount");
         try {
             loginUserService.verifyAccount(token);
         } catch (LoginUserDontExistException |
                 VerificationTokenDontExistException |
                 VerificationTokenIsTooOldException e) {
+            logger.error("verifyAccount");
             throw new BadTokenException("", "isActive");
         }
         return ResponseEntity.ok(Map.of("isActive", true));
@@ -89,6 +96,7 @@ public class AuthController {
     @PostMapping("/change-password")
     @SendResetPasswordEmail
     public ResponseEntity<Map<String, Boolean>> sendChangePasswordToken(@RequestBody Map<String, String> args) {
+        logger.debug("sendChangePasswordToken");
         if (args.get("email") != null) {
             if (loginUserService.findByEmail(args.get("email")) != null) {
                 return ResponseEntity.ok(Map.of("isSendEmail", true));
@@ -100,6 +108,7 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<Map<String, Boolean>> changePassword(@RequestParam String token,
                                                                @RequestBody Map<String, String> args) {
+        logger.debug("changePassword");
         if (args.get("password") != null) {
             try {
                 loginUserService.changePassword(token, args.get("password"));

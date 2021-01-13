@@ -39,6 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/user/**").hasAnyRole(
                         Role.ADMIN.toString(),
+                        Role.USER.toString())
+                .antMatchers(HttpMethod.GET, "/api/v1/weather/device/**").hasAnyRole(
+                        Role.ADMIN.toString(),
                         Role.USER.toString());
         http.csrf().disable();
     }
