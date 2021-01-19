@@ -20,6 +20,17 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
 
     private final VerificationTokenRepository verificationTokenRepository;
 
+    public VerificationToken generateVerificationToken(LoginUser loginUser) {
+        String token = "";
+        do  {
+            token = UUID.randomUUID().toString() + loginUser.getId();
+        } while (verificationTokenRepository.findByToken(token) != null);
+        return VerificationTokenBuilder.aVerificationToken()
+                .withLoginUser(loginUser)
+                .withToken(token)
+                .build();
+    }
+
     @Autowired
     public VerificationTokenService(VerificationTokenRepository verificationTokenRepository) {
         this.verificationTokenRepository = verificationTokenRepository;
@@ -61,16 +72,6 @@ public class VerificationTokenService implements CRUDService<VerificationToken, 
         return verificationTokenRepository.findByLoginUser_Id(id);
     }
 
-    public VerificationToken generateVerificationToken(LoginUser loginUser) {
-        String token = "";
-        do  {
-            token = UUID.randomUUID().toString() + loginUser.getId();
-        } while (verificationTokenRepository.findByToken(token) != null);
-        return VerificationTokenBuilder.aVerificationToken()
-                .withLoginUser(loginUser)
-                .withToken(token)
-                .build();
-    }
 
     public void deleteByToken(String token) {
         verificationTokenRepository.deleteByToken(token);
