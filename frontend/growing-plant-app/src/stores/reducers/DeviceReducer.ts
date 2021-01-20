@@ -38,9 +38,9 @@ export const DeviceReducer = (state: DeviceReducerState = INITIAL_STATE, action:
             const insolation: ChartInfo[] = [];
             const rain: ChartInfo[] = [];
             action.payload.forEach((weather: Weather) => {
-                temperature.push({ label: weather.localDateTime, value: weather.temperature });
-                insolation.push({ label: weather.localDateTime, value: weather.insolation });
-                rain.push({ label: weather.localDateTime, value: weather.rain });
+                temperature.push({ label: weather.localDateTime.slice(11), value: weather.temperature });
+                insolation.push({ label: weather.localDateTime.slice(11), value: weather.insolation });
+                rain.push({ label: weather.localDateTime.slice(11), value: weather.rain });
             });
             return { ...state, temperature, insolation, rain };
         }
