@@ -146,8 +146,9 @@ class UserServiceTest {
     }
 
     static Stream<Arguments> getArgsToPatchChange() {
-        return Stream.of(Arguments.of("name", "kkakaka"),
-                Arguments.of("email", "kkkk@22dsd.pl"));
+        return Stream.of(Arguments.of("firstName", "kkakaka"),
+                Arguments.of("email", "kkkk@22dsd.pl"),
+                Arguments.of("lastName", "test"));
     }
 
     @ParameterizedTest(name = "{displayName} - [{index}] {arguments}")
