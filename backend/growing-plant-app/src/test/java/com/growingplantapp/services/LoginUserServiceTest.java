@@ -197,5 +197,73 @@ class LoginUserServiceTest {
         }
     }
 
+    @Nested
+    public class VerificationAccount {
+        final String token = "dsfdsfsdsadsa";
+        final Long id = 1l;
+
+        @Test
+        public void verifyAccountWithoutToken() {
+            given(verificationTokenService.findByToken(token)).willReturn(null);
+            assertThrows(VerificationTokenDontExistException.class, () -> loginUserService.verifyAccount(token));
+            then(verificationTokenService).should().findByToken(token);
+            then(verificationTokenService).shouldHaveNoMoreInteractions();
+            then(passwordEncoder).shouldHaveNoInteractions();
+            then(loginUserRepository).shouldHaveNoInteractions();
+        }
+
+        @Test
+        public void verifyAccountWithoutLoginUser() {
+            given(verificationTokenService.findByToken(token)).willReturn(VerificationTokenBuilder
+                    .aVerificationToken()
+                    .withLoginUser(null)
+                    .withToken(token)
+                    .build());
+            assertThrows(LoginUserDontExistException.class, () -> loginUserService.verifyAccount(token));
+            then(verificationTokenService).should().findByToken(token);
+            then(verificationTokenService).shouldHaveNoMoreInteractions();
+            then(passwordEncoder).shouldHaveNoInteractions();
+            then(loginUserRepository).shouldHaveNoInteractions();
+        }
+
+        @Test
+        public void verifyAccountOldVerificationToken() {
+            VerificationToken verificationToken = VerificationTokenBuilder
+                    .aVerificationToken()
+                    .withLoginUser(LoginUserBuilder.aLoginUser().build())
+                    .withToken(token)
+                    .withId(id)
+                    .build();
+            verificationToken.setCreateTime(LocalDateTime.of(1970,1,1,1,1));
+            given(verificationTokenService.findByToken(token)).willReturn(verificationToken);
+            assertThrows(VerificationTokenIsTooOldException.class, () -> loginUserService.verifyAccount(token));
+            then(verificationTokenService).should().findByToken(token);
+            then(verificationTokenService).should().deleteByToken(token);
+            then(verificationTokenService).shouldHaveNoMoreInteractions();
+            then(passwordEncoder).shouldHaveNoInteractions();
+            then(loginUserRepository).shouldHaveNoInteractions();
+        }
+
+
+        @Test
+        public void verifyAccountWork() throws VerificationTokenIsTooOldException, VerificationTokenDontExistException, LoginUserDontExistException {
+            LoginUser user = LoginUserBuilder.aLoginUser().build();
+            VerificationToken verificationToken = VerificationTokenBuilder
+                    .aVerificationToken()
+                    .withLoginUser(user)
+                    .withToken(token)
+                    .build();
+            given(verificationTokenService.findByToken(token)).willReturn(verificationToken);
+            loginUserService.verifyAccount(token);
+            then(verificationTokenService).should().findByToken(token);
+            then(verificationTokenService).should().deleteByToken(token);
+            then(verificationTokenService).shouldHaveNoMoreInteractions();
+            then(passwordEncoder).shouldHaveNoInteractions();
+            then(loginUserRepository).should().save(user);
+            then(loginUserRepository).shouldHaveNoMoreInteractions();
+        }
+    }
+
+
 
 }
